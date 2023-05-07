@@ -1,0 +1,70 @@
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 8px 16px;
+    border-radius: 40px;
+}
+
+.btn-cookpad{
+    background-color: #ff9933;
+}
+
+.bg-cookpad{
+    background-color: #ff9933cb;
+}
+
+.opac-cookpad{
+    background-color: #ff9933;
+    opacity: 0.9;
+}
+
+.sticky{
+    position: sticky;
+}
+
+.top-header_{
+    top: 3.5rem;
+}
+
+.cookpad-underline {
+    --bs-cookpad-underline-gap: 1rem;
+    --bs-cookpad-underline-border-width: 0.125rem;
+    --bs-cookpad-underline-link-active-color: #ff9933;
+    gap: var(--bs-cookpad-underline-gap);
+  }
+
+  .img-caption {
+    position: absolute;
+    bottom: 1%;
+    left: 5%;
+    padding-bottom: 0.1rem;
+    color: #fff;
+    text-align: center;
+  }
+
+  .img-nav {
+    margin: 7px;
+    }
+
+ .btn-link-cookpad {
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: var(--bs-link-color);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--bs-link-hover-color);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--bs-link-hover-color);
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-disabled-color: #ff9900;
+    --bs-btn-disabled-border-color: transparent;
+    --bs-btn-box-shadow: 0 0 0 #000;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    text-decoration: underline;
+    }
+    .btn-link-cookpad:focus-visible {
+    color: var(--bs-btn-color);
+    }
+    .btn-link-cookpad:hover {
+    color: var(--bs-btn-hover-color);
+    }
