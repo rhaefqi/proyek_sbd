@@ -19,10 +19,7 @@ function register($data)
     $Password = $data['Password'];
     $Confirm_Password = $data['Confirm_Password'];
 
-    $cekUsername = mysqli_query($koneksi, "SELECT name FROM user WHERE name='$Name'");
     $cekEmail = mysqli_query($koneksi, "SELECT email FROM user WHERE email='$Email'");
-    $cekPassword = mysqli_query($koneksi, "SELECT password FROM user WHERE password='$Password'");
-    // $cekConfirm_Password = mysqli_query($koneksi, "SELECT Confirm_Password FROM user WHERE Confirm_Password='$Confirm_Password'");
 
     if (mysqli_num_rows($cekEmail) > 0) {
         echo "
@@ -44,15 +41,7 @@ function register($data)
              alert('Konfirmasi kata sandi tidak sesuai dengan Kata sandi');
              document.location.href = 'signup.php';
          </script> ";
-    }
-    // elseif (mysqli_num_rows($Confirm_Password) != mysqli_num_rows($Password)) {
-    //     echo "
-    //     <script>
-    //         alert('Konfirmasi kata sandi tidak sesuai dengan Kata sandi');
-    //         document.location.href = 'index.php';
-    //     </script>
-    // ";} 
-    else {
+    } else {
         mysqli_query($koneksi, "INSERT INTO user (name, email, password) VALUES ('$Name', '$Email', '$Password')");
         echo "
     <script>
@@ -91,7 +80,7 @@ function login($data)
         echo
             "<script>
                     alert('Selamat kamu telah login');
-                    document.location.href = '/proyek_sbd/';
+                    document.location.href = '#';
             </script>";
         $_SESSION['Email'] = $email;
         $_SESSION['username'] = $user;
@@ -103,6 +92,66 @@ function login($data)
             </script>";
     }
 }
+
+function cekEmail($data) {
+    global $koneksi, $Email;
+    $Email = $data['Email'];
+    $cekEmail = mysqli_query($koneksi, "SELECT email FROM user WHERE email='$Email'");
+
+    if (mysqli_num_rows($cekEmail) == 0) {
+        echo "<script>
+            alert('Email tidak tersedia');
+        </script>";
+    } else {
+        echo "<script>
+            document.location.href = 'updatepassword.php?email=$Email';
+        </script>";
+    }
+}
+
+function updatepassword($data) {
+    global $koneksi;
+
+    $Email = $_GET['email'];
+    $Password = $data['Password'];
+    $Confirm_Password = $data['Confirm_Password'];
+
+    $sql = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$Email'");
+    while($data = mysqli_fetch_assoc($sql)){
+        // ...
+    }
+
+    if (strlen($Password) < 6) {
+        echo "
+        <script>
+            alert('Kata sandi terlalu pendek (minimum 6 karakter)');
+            document.location.href = 'updatepassword.php';
+        </script>";
+    } elseif ($Password != $Confirm_Password) {
+        echo "
+        <script>
+            alert('Konfirmasi kata sandi tidak sesuai dengan Kata sandi');
+            document.location.href = 'updatepassword.php';
+        </script>";
+    } else {
+        $sql = "UPDATE user
+        SET
+        password = '$Password'
+        WHERE email = '$Email'";
+
+        $query = mysqli_query($koneksi, $sql);
+        if ($query) {
+            echo "
+            <script>
+                alert('Berhasil Diubah');
+                document.location.href = 'signin.php';
+            </script>";
+        }
+    }
+}
+
+
+
 function tambahresep($data)
 {
     echo "<pre>";
