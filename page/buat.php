@@ -1,31 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Body Starts -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<div style="background-color: #f8f6f2;">
+  <div class="container">
+    <div class="container-fluid">
 
-    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../asset/css/tambahan.css">
-    <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
+      <!-- Tulis Catatan starts -->
+      <div class="text-center">
+        <br>
+        <br>
+        <img src="asset/img/buat.svg" alt="">
+        <br><br>
+        <h4><b>Tulis Catatan Masakmu</b></h4>
+        <p>Bantu pengguna lain mendapatkan ide memasak</p>
 
-</head>
+        <p><b><a class="btn btn-info" href="">Resep</a> &nbsp; &nbsp;<a class="btn btn-info" href="">Tips</a> &nbsp;
+            &nbsp;<a class="btn btn-info" href="">Cookbook</a></b></p>
+        <br><br>
 
-<body>
-    <div class="container text-center mt-5">
-        <a href="buatresep.php" class="btn btn-outline-warning btn-lg" >Buat Resep</a>
-        <a href="buattips.php" class="btn btn-outline-warning btn-lg">Buat Tips</a>
-        <a href="buatcookbook.php" class="btn btn-outline-warning btn-lg">Buat Cookbook</a>
-        <a href="../Logout.php" class="btn btn-outline-danger btn-lg">Logout</a><br><br>
-        <a href="../" class="btn btn-outline-primary btn-lg">kembali</a>
+      </div>
+      <!-- Tulis Catatan end -->
+
     </div>
+  </div>
+</div>
 
-    <script src="../asset/js/bootstrap.bundle.min.js"></script>
-    <script src="../asset/js/bootstrap.min.js"></script>
-    <script src="../asset/js/jquery.js"></script>
-</body>
-
-</html>
-
+<!-- Body End -->

@@ -10,6 +10,17 @@ if ($koneksi->connect_error) {
     die("Koneksi gagal " . $koneksi->connect_error);
 }
 
+function tampilkan($query)
+{
+    global $koneksi;
+    $hasil = mysqli_query($koneksi, $query);
+    $kosong = [];
+    while ($isi = mysqli_fetch_assoc($hasil)) {
+        $kosong[] = $isi;
+    }
+    return $kosong;
+}
+
 
 function register($data)
 {
@@ -63,6 +74,11 @@ function login($data)
 
     $sql = "SELECT * FROM user WHERE (email = '{$email_login}') AND password = '{$pass_login}'";
     $query = mysqli_query($koneksi, $sql);
+    // $tes = mysqli_fetch_assoc($query);
+    // echo"<pre>";
+    // var_dump($tes);
+    // echo"</pre>";
+    // // die;
 
     if (!$query) {
         die("Query gagal" . mysqli_error($koneksi));
@@ -71,6 +87,10 @@ function login($data)
     $email = null;
 
     while ($row = mysqli_fetch_array($query)) {
+        // echo "<pre>";
+        // var_dump($row);
+        // echo "</pre>";
+        // die;
         $email = $row['email'];
         $pass = $row['password'];
         $user = $row['username'];
@@ -80,7 +100,7 @@ function login($data)
         echo
             "<script>
                     alert('Selamat kamu telah login');
-                    document.location.href = '#';
+                    document.location.href = '/proyek_sbd';
             </script>";
         $_SESSION['Email'] = $email;
         $_SESSION['username'] = $user;
@@ -93,7 +113,8 @@ function login($data)
     }
 }
 
-function cekEmail($data) {
+function cekEmail($data)
+{
     global $koneksi, $Email;
     $Email = $data['Email'];
     $cekEmail = mysqli_query($koneksi, "SELECT email FROM user WHERE email='$Email'");
@@ -109,7 +130,8 @@ function cekEmail($data) {
     }
 }
 
-function updatepassword($data) {
+function updatepassword($data)
+{
     global $koneksi;
 
     $Email = $_GET['email'];
@@ -117,7 +139,7 @@ function updatepassword($data) {
     $Confirm_Password = $data['Confirm_Password'];
 
     $sql = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$Email'");
-    while($data = mysqli_fetch_assoc($sql)){
+    while ($data = mysqli_fetch_assoc($sql)) {
         // ...
     }
 
@@ -184,7 +206,7 @@ function tambahresep($data)
                         document.location.href = 'tambahresep.php';
                     </script>";
     } else {
-        $resep = "INSERT INTO resep (user_id, judul, excerpt, porsi, lama_memasak, image, asal_masakan) VALUES ('$id', '$judul', '$deskripsi', '$porsi', '$lamaMemasak', '$gambar', '$asal')";
+        $resep = "INSERT INTO resep (judul, excerpt, porsi, lama_memasak, image, asal_masakan, user_id) VALUES ('$judul', '$deskripsi', '$porsi', '$lamaMemasak', '$gambar', '$asal', '$id')";
     }
     if ($koneksi->query($resep) === TRUE) {
         $hasil_post = mysqli_query($koneksi, "SELECT resep_id FROM resep ORDER BY resep_id DESC LIMIT 1");
@@ -279,13 +301,14 @@ function langkah($data, $postid, $jenis)
 
     if ($jenis_post == 1) {
         for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
+            
             // $gambar_langkah = $gambar[$i];
             $langkah = $data[$i];
             $gambar_langkah = upload2($i);
             if ($gambar_langkah == 'default_gambar.jpg') {
-                mysqli_query($koneksi, "insert into langkah(langkah, post_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
+                mysqli_query($koneksi, "insert into langkah_resep(langkah, resep_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
             } else {
-                mysqli_query($koneksi, "insert into langkah(langkah, post_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
+                mysqli_query($koneksi, "insert into langkah_resep(langkah, resep_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
             }
 
             // if ($gambar == NULL) {

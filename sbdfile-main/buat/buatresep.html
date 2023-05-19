@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../asset/css/tambahan.css">
+        <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
+    
+        <link rel="icon" href="">
+        <title>Tubes SBD</title>
+        
+</head>
+<body>
+
+    <!-- Navbar start -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top shadow">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../asset/img/cookpad_logo.png" alt="" height="40"></a>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button class="btn btn-cookpad">Terbitkan</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Navbar end -->
+
+
+    <!-- Body Starts -->
+
+      <div style="background-color: #f8f6f2;">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-8">
+
+            <!-- Tulis Catatan starts -->
+            <div class="text-center">
+              <br>
+              <br>
+              <img src="../asset/img/buat.svg" alt="">
+              <br><br>
+              <h4><b>Tambahkan Foto Resep</b></h4>
+              <p>Tunjukkan foto hasil akhir masakanmu</p>
+              <br><br>
+
+            </div>
+            <!-- Tulis Catatan end -->
+
+            <!-- Judul Start -->
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <input type="text" class="form-control" id="judulresep" placeholder="Judul : Sup Ayam Favorit Keluarga" style="font-size: 30px; font-weight: bold;">
+                    </div>
+
+                    <div class="card-body">
+                        <textarea class="form-control" rows="5" id="ceritaresep" style="font-size: 15px;">cerita dibalik masakan ini. Apa atau siapa yang menginspirasimu? APa yang membuatnya istimewa? bagaimana caramu menikmatinya?
+                        </textarea>
+                        <input type="text" class="form-control" id="asalresep" placeholder="Masukkan daerah asal resep">
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row row-cols-2 g-2">
+                          <div class="col">Porsi</div>
+                          <div class="col">
+                            <input type="text" class="form-control" id="porsi" placeholder="2 orang">
+                          </div>
+
+                          <div class="col">Lama Memasak</div>
+                          <div class="col">
+                            <input type="text" class="form-control" id="lamamemasak" placeholder="1 Jam 30 Menit">
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+            </div>
+            <!-- Judul End -->
+            <br>
+
+            <!-- Bahan start -->
+            <div class="container">
+                
+              <div class="card">
+                <div class="card-body">
+                    <h2><b>Bahan - Bahan</b></h2>
+                    <br>
+
+                    <!-- Bahan 1 -->
+                    <div id="bahanmasakan" class="bahanadd">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-1"><img class="drag-handle" src="../asset/img/drag.png" alt="" width="50%"></div>
+  
+                        <div class="col-10">
+                          <input type="text" class="form-control  " id="bahan" placeholder="1/2 ekor ayam">
+                          </div>
+                        
+                        <div class="col-1">
+                          <img src="../asset/img/more.png" alt="" width="50%">
+                          </div>
+                      </div>
+                      <br>
+                    </div>
+
+                    <!-- Bahan2 -->
+                    <div id="bahanmasakan" class="bahanadd">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-1"><img class="drag-handle" src="../asset/img/drag.png" alt="" width="50%"></div>
+  
+                        <div class="col-10">
+                          <input type="text" class="form-control  " id="bahan" placeholder="2 Siung Bawang Putih">
+                          </div>
+                        
+                        <div class="col-1">
+                          <img src="../asset/img/more.png" alt="" width="50%">
+                          </div>
+                      </div>
+                      <br>
+                    </div>
+
+                      <!-- Bahan 3 -->
+                      <div id="bahanmasakan" class="bahanadd">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-1"><img class="drag-handle" src="../asset/img/drag.png" alt="" width="50%"></div>
+    
+                          <div class="col-10">
+                            <input type="text" class="form-control  " id="bahan" placeholder=". . .">
+                            </div>
+                          
+                          <div class="col-1">
+                            <img src="../asset/img/more.png" alt="" width="50%">
+                            </div>
+                        </div>
+                        <br>
+                      </div>
+                    
+
+                    <!-- Button -->
+                    <!-- Button -->
+
+                    <div class="d-flex justify-content-center">
+                      <button class="btn btn-light" id="tambahbahan"> + Bahan</button> &nbsp; &nbsp;
+                      <button class="btn btn-light" id="tambahgrup"> + Grup</button>
+                    </div>
+
+                  </div>
+
+              </div>
+
+              </div>
+            <!-- Bahan End -->
+            <br>
+
+            <!-- Langkah start -->
+            <div class="container">
+                
+              <div class="card">
+                <div class="card-body">
+                    <h2><b>Langkah</b></h2>
+                    <br>
+
+                    <!-- Langkah 1 -->
+                    <div id="langkahmasakan" class="langkahadd">
+                      <div class="row g-2 row-cols-3 d-flex justify-content-center">
+                        <div class="col-1" id="nomorlangkah">
+                          <span class="border border-1 bg-dark text-white" style="font-size: 20px;">
+                            1
+                          </span>
+                        </div>
+  
+                        <div class="col-10">
+                          <input type="text" class="form-control  " id="bahan" placeholder="Potong Ayam menjadi beberapa bagian">
+                          </div>
+                        
+                        <div class="col-1">
+                          <img src="../asset/img/more.png" alt="" width="50%">
+                          </div>
+
+                          <div class="col-1" ></div>
+
+                          <div class="col-10">
+                            <div id="imageContainer">
+                              <img id="uploadedImage" src="../asset/img/img.png" alt="" width="200px">
+                            </div>                            
+                          </div>
+
+                          <div class="col-1"></div>
+                      </div>
+                      <br>
+                    <br>
+                    </div>
+
+                    <!-- Langkah 2 -->
+                    <div id="langkahmasakan" class="langkahadd">
+                      <div class="row g-2 row-cols-3 d-flex justify-content-center">
+                        <div class="col-1" id="nomorlangkah">
+                          <span class="border border-1 bg-dark text-white" style="font-size: 20px;">
+                            2
+                          </span>
+                        </div>
+
+                        <div class="col-10">
+                          <input type="text" class="form-control" id="bahan2" placeholder="Rebus Ayam hingga mendidih">
+                        </div>
+
+                        <div class="col-1">
+                          <img src="../asset/img/more.png" alt="" width="50%">
+                        </div>
+
+                        <div class="col-1"></div>
+
+                        <div class="col-10">
+                          <div id="imageContainer2">
+                            <img id="uploadedImage2" src="../asset/img/img.png" alt="" width="200px">
+                          </div>
+                        </div>
+
+                        <div class="col-1"></div>
+                      </div>
+                      <br>
+                      <br>
+                    </div>
+
+                    <!-- Langkah 3 -->
+                    <div id="langkahmasakan" class="langkahadd">
+                      <div class="row g-2 row-cols-3 d-flex justify-content-center">
+                        <div class="col-1" id="nomorlangkah">
+                          <span class="border border-1 bg-dark text-white" style="font-size: 20px;">
+                            3
+                          </span>
+                        </div>
+
+                        <div class="col-10">
+                          <input type="text" class="form-control" id="bahan3" placeholder="Potong Ayam menjadi beberapa bagian">
+                        </div>
+
+                        <div class="col-1">
+                          <img src="../asset/img/more.png" alt="" width="50%">
+                        </div>
+
+                        <div class="col-1"></div>
+
+                        <div class="col-10">
+                          <div id="imageContainer3">
+                            <img id="uploadedImage3" src="../asset/img/img.png" alt="" width="200px">
+                          </div>
+                        </div>
+
+                        <div class="col-1"></div>
+                      </div>
+                      <br>
+                      <br>
+                    </div>
+
+                    <!-- button -->
+                    <!-- button -->
+                    <div class="d-flex justify-content-center">
+                      <button class="btn btn-light" id="tambahlangkah"> + Langkah</button>
+                      
+                    </div>
+
+
+                  </div>
+
+              </div>
+              <br>
+              <!-- Label start -->
+            <div class="card">
+              <div class="card-body">
+                <h2><b>Tambahkan Label</b></h2>
+                <br>
+                <div class="btn-sm" role="" aria-label="Basic checkbox toggle button group">
+                  <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck1">Sarapan</label>
+                
+                  <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck2">Makan Siang</label>
+                
+                  <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck3">Makan Malam</label>
+
+                  <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck4">Cemilan</label>
+
+                  <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck5">Hidangan Utama</label>
+
+                  <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
+                  <label class="btn btn-light btn-sm" for="btncheck6">Hidangan Penutup</label>
+                </div>
+              </div>
+            </div>
+            <!-- Label end -->
+
+              </div>
+            <!-- Langkah End -->
+            <br>
+            
+
+
+          </div>
+          <div class="col"></div>
+        </div>
+        <br><br>
+      </div>
+
+    <!-- Body End -->
+
+ 
+    
+<!-- Script Bootstrap -->
+<script src="../asset/js/jquery.js"></script>
+
+<!-- js untuk tambah bahan -->
+<script>
+  $(document).ready(function() {
+    // Menggunakan class sebagai selector untuk tombol "Tambah Bahan"
+    $('.btn#tambahbahan').click(function() {
+      // Menduplikasi div "Bahan Masakan" terakhir
+      var lastBahan = $('.bahanadd#bahanmasakan:last').clone();
+      // Mengosongkan nilai input pada div yang baru
+      lastBahan.find('input').val('');
+      // Menambahkan div baru setelah div "Bahan Masakan" terakhir
+      lastBahan.insertAfter('.bahanadd#bahanmasakan:last');
+    });
+  });
+</script>
+
+<!-- js untuk tambah grup -->
+<script>
+  $(document).ready(function() {
+    // Menggunakan class sebagai selector untuk tombol "Tambah Bahan"
+    $('.btn#tambahgrup').click(function() {
+      // Menduplikasi div "Bahan Masakan" terakhir
+      var lastBahan = $('.bahanadd#bahanmasakan:last').clone();
+      // Mengosongkan nilai input pada div yang baru
+      lastBahan.find('input').val('');
+      // Menambahkan div baru setelah div "Bahan Masakan" terakhir
+      lastBahan.insertAfter('.bahanadd#bahanmasakan:last');
+    });
+  });
+</script>
+
+<!-- js untuk upload gambar dari langkah yg sudah ada -->
+<script>
+// Get the image container and the uploaded image element
+const imageContainer = document.getElementById('imageContainer');
+const uploadedImage = document.getElementById('uploadedImage');
+
+const imageContainer2 = document.getElementById('imageContainer2');
+const uploadedImage2 = document.getElementById('uploadedImage2');
+
+const imageContainer3 = document.getElementById('imageContainer3');
+const uploadedImage3 = document.getElementById('uploadedImage3');
+
+// Create an input element
+const input1 = document.createElement('input');
+input1.type = 'file';
+
+const input2 = document.createElement('input');
+input2.type = 'file';
+
+const input3 = document.createElement('input');
+input3.type = 'file';
+
+// Hide the input element initially
+input1.style.display = 'none';
+input2.style.display = 'none';
+input3.style.display = 'none';
+
+// When the image is clicked, trigger the input file selection
+uploadedImage.addEventListener('click', () => {
+  input1.click();
+});
+uploadedImage2.addEventListener('click', () => {
+  input2.click();
+});
+
+uploadedImage3.addEventListener('click', () => {
+  input3.click();
+});
+
+// When a file is selected, display the image
+input1.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    uploadedImage.src = reader.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+
+input2.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    uploadedImage2.src = reader.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+
+input3.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    uploadedImage3.src = reader.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+
+// Append the input element to the image container
+imageContainer.appendChild(input1);
+imageContainer2.appendChild(input2);
+imageContainer3.appendChild(input3);
+
+</script>
+
+<!-- js untuk tambah langkah -->
+<script>
+  $(document).ready(function() {
+    var langkahCounter = 3; // Initial step counter value
+
+    // Function to add a new step
+    function addNewStep() {
+      langkahCounter++; // Increment the step counter
+
+      // Clone the last step's HTML
+      var lastLangkah = $('.langkahadd#langkahmasakan:last').clone();
+
+      // Find the relevant elements in the cloned step
+      var span = lastLangkah.find('span');
+      var input = lastLangkah.find('input');
+      var imageContainer = lastLangkah.find('.imageContainer');
+      var uploadedImage = lastLangkah.find('.uploadedImage');
+
+      // Update the IDs and attributes with the new step counter value
+      span.text(langkahCounter);
+      input.attr('id', 'bahan' + langkahCounter);
+      imageContainer.attr('id', 'imageContainer' + langkahCounter);
+      uploadedImage.attr('id', 'uploadedImage' + langkahCounter);
+
+      // Clear the input value and set the default image
+      input.val('');
+      uploadedImage.attr('src', '../asset/img/img.png');
+
+      // Append the cloned step after the last step
+      lastLangkah.insertAfter('.langkahadd#langkahmasakan:last');
+
+      // Attach the click event listener to the uploaded image
+      uploadedImage.click(function() {
+        input.click();
+      });
+
+      // Attach the change event listener to the input file element
+      input.change(function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function() {
+          uploadedImage.attr('src', reader.result);
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Append the input element after the uploaded image
+      uploadedImage.after(input);
+    }
+
+    // Add a new step when the "Tambah Langkah" button is clicked
+    $('.btn#tambahlangkah').click(function() {
+      addNewStep();
+    });
+
+    // Initial setup for existing steps
+    $('.uploadedImage').click(function() {
+      $(this).siblings('input').click();
+    });
+
+    $('.bahanadd input[type="file"]').change(function(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      var uploadedImage = $(this).siblings('img');
+
+      reader.onload = function() {
+        uploadedImage.attr('src', reader.result);
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+
+</script>
+
+
+<script src="../asset/js/bootstrap.bundle.min.js"></script>
+<script src="../asset/js/bootstrap.min.js"></script>
+
+</body>
+</html>

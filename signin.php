@@ -23,7 +23,7 @@ if (isset($_POST["submit"])) {
         <input type="password" name="Password" id="Password" placeholder="Kata Sandi" required /><br>
 
         <input type="submit" name="submit" id="submit" value="Sign in" />
-        <a href="#">back</a>
+        <a href="cekEmail.php">Lupa kata sandi</a>
 
     </form>
 </body>

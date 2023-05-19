@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../asset/css/tambahan.css">
+        <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
+    
+        <link rel="icon" href="">
+        <title>Tubes SBD</title>
+        
+</head>
+<body>
+
+    <!-- Navbar start -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top shadow">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../asset/img/cookpad_logo.png" alt="" height="40"></a>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button class="btn btn-cookpad">Perbarui</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Navbar end -->
+
+
+    <!-- Body Starts -->
+
+      <div style="background-color: #f8f6f2;">
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8 card">
+                    <div class="card-body">
+                      <br>
+                    <div class="text-center">
+                      <div id="imageContainer">
+                        <img id="uploadedImage" src="../asset/img/buat.svg" alt="" width="35%">
+                      </div>
+                        <br>
+                        <p cl>Tambahkan Foto Sampul</p>
+                        <br><br>
+                    </div>
+
+                    <form action="">
+                        <!-- publik or privat -->
+
+                            <div style="align-self: flex-end;">
+                              <label for="privasi" style="font-size: 20px; font-weight: bold;">Publik</label>
+                              <select name="privasi" id="privasi" class="form-control" style="width: 200px;">
+                                  <option selected>Pilihan sebelumnya</option>
+                                  <option value="1">Cookbook Publik</option>
+                                  <option value="1">Cookbook Private</option>
+                              </select>
+                        </div>
+                        <br>
+                        <!-- nama cookbook -->
+                            <label for="namacookbook" style="font-size: 20px; font-weight: bold;">Nama Cookbook</label>
+                            <input id="namacookboo" class="form-control" type="text" placeholder="Inspirasi Bekal Anak" value="Ini adalah Nama Cookbook Sebelumnya">  
+                        <br>
+                            
+                        <!-- deskripsi cookbook -->
+                            <label for="desccookbook" style="font-size: 20px; font-weight: bold;">Deskripsi</label>
+                            <textarea class="form-control" name="" id="desccookbook" rows="10" placeholder="Apa isi cookbook ini?">Ini adalah Deskripsi Cookbook Sebelumnya</textarea>
+                            <br>
+                        
+                    </form>
+                     <br>
+                    </div>
+
+                    </div>
+
+                <div class="col-2"></div>
+
+            </div>
+        </div>
+        <br><br>
+      </div>
+
+    <!-- Body End -->
+    
+
+ 
+    
+<!-- Script Bootstrap -->
+<script src="../asset/js/jquery.js"></script>
+<script>
+  // Get the image container and the uploaded image element
+  const imageContainer = document.getElementById('imageContainer');
+  const uploadedImage = document.getElementById('uploadedImage');
+  
+  // Create an input element
+  const input1 = document.createElement('input');
+  input1.type = 'file';
+  
+  // Hide the input element initially
+  input1.style.display = 'none';
+  
+  // When the image is clicked, trigger the input file selection
+  uploadedImage.addEventListener('click', () => {
+    input1.click();
+  });
+  
+  // When a file is selected, display the image
+  input1.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onload = () => {
+      uploadedImage.src = reader.result;
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  });
+  
+  // Append the input element to the image container
+  imageContainer.appendChild(input1);
+  
+  </script>
+<script src="../asset/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html> 
