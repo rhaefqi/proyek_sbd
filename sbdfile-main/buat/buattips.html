@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../asset/css/tambahan.css">
+        <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
+    
+        <link rel="icon" href="">
+        <title>Tubes SBD</title>
+        
+</head>
+<body>
+
+    <!-- Navbar start -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top shadow">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../asset/img/cookpad_logo.png" alt="" height="40"></a>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button class="btn btn-cookpad">Terbitkan</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Navbar end -->
+
+
+    <!-- Body Starts -->
+
+      <div style="background-color: #f8f6f2;">
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8 card">
+
+                    <div class="card-body">
+                        <input class="form-control" type="text" placeholder="Judul : Cara memotong bawang bombay" style="font-size: 25px; font-weight: bold;">  
+                    <br>
+                    <div class="tipsadd" id="langkahtips">
+                        <textarea class="form-control" name="" id="" rows="10" placeholder="Mis : Untuk memotong bawang bombay, mulailah dengan membelah bawang jadi dua dari arah atas ke bawah..."></textarea>
+                        <br>
+                        <div id="imageContainer">
+                            <img id="uploadedImage" src="../asset/img/img2.png" alt="" width="100%">
+                        </div>
+                        <hr>
+
+                        <br>
+                    </div>
+                  
+
+                  <div>
+                    <button class="btn btn-light" id="tambahtips"> + Langkah</button>
+                  </div>
+                  <br>
+
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <br><br>
+      </div>
+
+    <!-- Body End -->
+      
+    <!-- Footer Start -->
+    <div class="shadow">
+        
+        <footer class="shadow">
+          <!-- About Us  -->
+        <div class="container">
+  
+          <div class="row">
+              <div class="col-sm-8">
+                <br>
+                <small><b>Tentang Kami</b></small>
+                <p>
+                  Misi kami di Cookpad adalah untuk membuat masak sehari-hari makin menyenangkan, karena kami
+                  percaya bahwa memasak adalah kunci menuju kehidupan yang lebih bahagia dan lebih sehat bagi manusia,
+                  komunitas, dan planet ini. Kami mendukung koki rumahan di seluruh dunia untuk membantu satu sama lain
+                  dengan berbagi resep dan tips memasak.
+                </p>
+                <p><a href="#">Langganan Premium</a> untuk menikmati fitur & manfaat eksklusif!</p>
+                <br>
+                
+              </div>
+  
+              <div class="col-sm-4">
+                <br>
+                <ul type="none">
+                  <li><small><b>Selengkapnya</b></small></li>
+                  <li><a href="#">Cookpad Premium</a></li>
+                  <li><a href="#">Karir</a></li>
+                  <li><a href="#">Kirim Saran</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="#">Ketentuan Pemakaian</a></li>
+                  <li><a href="#">Kebijakan Privasi</a></li>
+                  <li></li>
+  
+                  <li>
+                    <div>
+                      <a href="#"><img width="6%" src="../asset/img/facebook.svg" alt=""></a>
+                      <a href="#"><img width="6%" src="../asset/img/instagram.svg" alt=""></a>
+                      <a href="#"><img width="6%" src="../asset/img/twitter.svg" alt=""></a>
+                      <a href="#"><img width="6%" src="../asset/img/youtube.svg" alt=""></a>
+                      <a href="#"><img width="6%" src="../asset/img/tiktok.svg" alt=""></a>
+                    </div>
+                  </li>
+  
+                  <li>
+                    <div>
+                      <br>
+                      <p><b>Unduh Aplikasi kami</b></p>
+                      <div class="row">
+                        <div class="col"><a href="#"><img src="../asset/img/appstore.svg" alt=""></a></div>
+                        <div class="col"><a href="#"><img src="../asset/img/playstore.svg" alt=""></a></div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+  
+  
+  
+              </div>
+  
+          </div>
+  
+        </div>
+          <!-- About Us End  -->
+          <br>
+          <!-- Copyright -->
+          <div class="text-center">
+            <small>Copyright &copy; Cookpad Inc.</small>
+          <br>
+          <img src="../asset/img/footer_image.png" alt="">
+          </div>
+        </footer>
+      </div>
+     <!-- Footer End -->
+
+ 
+    
+<!-- Script Bootstrap -->
+<script src="../asset/js/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+      // Menggunakan class sebagai selector untuk tombol "Tambah Bahan"
+      $('.btn#tambahtips').click(function() {
+        // Menduplikasi div "tips Masakan" terakhir
+        var lasttips = $('.tipsadd#langkahtips:last').clone();
+        // Mengosongkan nilai input pada div yang baru
+        lasttips.find('textarea').val('');
+        // Menghapus atribut "id" pada input untuk mencegah konflik
+        lasttips.find('textarea').removeAttr('id');
+        // Menghapus atribut "name" pada input untuk mencegah data dikirim saat submit
+        lasttips.find('textarea').removeAttr('name');
+        // Menghapus gambar yang terupload
+        lasttips.find('#uploadedImage').attr('src', '../asset/img/img2.png');
+        // Menambahkan div baru setelah div "tips Masakan" terakhir
+        lasttips.insertAfter('.tipsadd#langkahtips:last');
+      });
+    });
+  </script>
+  
+
+  <!-- js untuk upload gambar dari langkah yg sudah ada -->
+    <script>
+    // Get the image container and the uploaded image element
+    const imageContainer = document.getElementById('imageContainer');
+    const uploadedImage = document.getElementById('uploadedImage');
+    
+    // Create an input element
+    const input1 = document.createElement('input');
+    input1.type = 'file';
+    
+    // Hide the input element initially
+    input1.style.display = 'none';
+    
+    // When the image is clicked, trigger the input file selection
+    uploadedImage.addEventListener('click', () => {
+      input1.click();
+    });
+    
+    // When a file is selected, display the image
+    input1.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+    
+      reader.onload = () => {
+        uploadedImage.src = reader.result;
+      };
+    
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Append the input element to the image container
+    imageContainer.appendChild(input1);
+    
+    </script>
+
+<script src="../asset/js/bootstrap.bundle.min.js"></script>
+<script src="../asset/js/bootstrap.min.js"></script>
+
+</body>
+</html> 
