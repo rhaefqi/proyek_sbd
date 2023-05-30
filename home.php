@@ -8,7 +8,7 @@ require_once "function.php";
       <div class="container-fluid">
 
         <br>
-
+        <div id="search_section"></div>
         <center>
           <div>
             <img src="asset/img/cookpad_logo.png" alt="" height="80">
@@ -27,21 +27,6 @@ require_once "function.php";
             <button class="input-group-text btn-cookpad">Cari</button>
           </div>
 
-          <div>
-            <p><b>PENCARIAN POPULER HARI INI </b></p>
-
-            <p>
-              <b>
-                <a href="">rendang daging</a> &nbsp; &nbsp;
-                <a href="">kacang bawang</a> &nbsp; &nbsp;
-                <a href="">gulai ayam</a> &nbsp; &nbsp;
-                <a href="">semur daging</a>
-              </b>
-            </p>
-
-            <span><button class="btn btn-secondary">katergori</button></span>
-
-          </div>
           <br>
 
           <center>
@@ -62,7 +47,7 @@ require_once "function.php";
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
               aria-label="Slide 3"></button>
           </div>
-          <div class="carousel-inner">
+          <div class="carousel-inner" id="hasil-bahan">
             <div class="carousel-item active">
               <img src="asset/img/ban5.jpg" class="d-block w-100" alt="...">
             </div>
@@ -88,19 +73,6 @@ require_once "function.php";
         <br>
 
         <!-- inspirasi start -->
-        <p>
-          <a href="#collapseExample">
-            Inspirasi
-          </a> &nbsp; &nbsp;
-          <a href="#collapseExample">
-            Mengikuti
-          </a>
-        </p>
-        <div>
-          <div class="card card-body">
-            Halaman untuk menampilkan inspirasi dan mengikuti
-          </div>
-        </div>
         <!-- inspirasi end -->
         <br><br>
 
@@ -108,111 +80,93 @@ require_once "function.php";
         <div>
           <h4><b>Apa isi kulkasmu?</b></h4>
 
-          <div class="card container opac-cookpad">
-            <br>
-            <p>Kombinasikan beberapa bahan untuk mendapatkan ide baru. <a href="#">Hanya di aplikasi Cookpad</a></p>
-          </div>
           <br>
 
-          <div>
-            <button type="button" class="btn btn-cookpad">Bayam</button>
-            <button type="button" class="btn bg-dark-subtle">Tepung Terigu</button>
-            <button type="button" class="btn bg-dark-subtle">Labu Siam</button>
-            <button type="button" class="btn bg-dark-subtle">Buncis</button>
-            <button type="button" class="btn bg-dark-subtle">Jagung</button>
+          <?php
+          if (isset($_POST["caribahan"])) {
+            $bahan = caribahan($_POST);
+          } else {
+            $bahan = caribahan('ayam');
+          }
+          // foreach($bahan as $bahan){
+          // echo '<pre>';
+          // var_dump($bahan);
+          // echo '</pre>';
+          // }
+          
+          ?>
+
+          <div class="d-flex ">
+            <form method="post" action="#hasil-bahan">
+              <input type="hidden" value="ayam" name="keyword">
+              <button type="submit" name="caribahan" class="btn btn-cookpad">ayam</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="sapi" name="keyword">
+              <button type="submit" name="caribahan" class="btn btn-cookpad">sapi</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="ikan" name="keyword">
+              <button type="submit" name="caribahan" class="btn btn-cookpad">ikan</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="kambing" name="keyword">
+              <button type="submit" name="caribahan" class="btn btn-cookpad">kambing</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="tahu" name="keyword">
+              <button type="submit" name="caribahan" class="btn btn-cookpad">tahu</button>
+            </form>
           </div>
 
           <br>
+
 
           <div>
             <ul class="nav nav-underline">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Semua</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="#">Olahan 1</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 2</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 3</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 4</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 5</a>
+                <a class="nav-link active" aria-current="page" href="#">Olahan bayam</a>
               </li>
             </ul>
           </div>
 
           <div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+            <div class="row row-cols-1 row-cols-md-4 g-4">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
+              <?php foreach ($bahan as $bahan): ?>
+                <div class="col">
+                  <div>
+                    <p>user_name_account</p>
                   </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+                  <div class="card">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
+                    <img class="card-img" src="asset/img/logo.png" alt="...">
+                    <div class="card-img-overlay">
+                      <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Nama Makanan</h5>
+                      <p class="card-text">Reaksi</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+              <?php endforeach ?>
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           <br>
-
-          <center>
-            <button class="btn btn-secondary"><span><img class="img-nav" src="asset/img/cari.png" alt=""
-                  height="15"></span>Temukan Ide Lainnya</button>
-          </center>
 
           <br>
         </div>
         <!-- Masak Apa Saja End -->
         <br><br>
         <!-- Rekomendasi Cookbook Starts -->
-        <div>
+        <div class="mb-5">
           <h3>Lihat Cookbook</h3>
           <p>Jelajahi ide-ide masak baru bersama</p>
 
@@ -253,14 +207,11 @@ require_once "function.php";
 
 
           <!-- <center> -->
-          <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-secondary">Lihat Semua Cookbook</button>
-          </div>
+
           <!-- </center> -->
 
         </div>
 
-        <br><br>
         <!-- Ingin makan apa start -->
         <div>
           <h4><b>Ingin makan apa</b></h4>
@@ -294,10 +245,10 @@ require_once "function.php";
                 </a>
               </div>
             </div>
-            <div class="col">
+            <div class="col" >
               <div class="card">
                 <a href=""><img src="asset/img/kue.jpeg" class="card-img-top" alt="...">
-                  <div class="img-caption">
+                  <div class="img-caption" id="hasil-alat">
                     <h5 class="text-white"><b>Kue</b></h5>
                   </div>
                 </a>
@@ -307,7 +258,7 @@ require_once "function.php";
           <br>
 
 
-          <div class="d-grid gap-2 col-3 mx-auto">
+          <div class="d-grid gap-2 col-3 mx-auto" >
             <button class="btn btn-secondary">Pilihin dong!</button>
           </div>
 
@@ -315,15 +266,43 @@ require_once "function.php";
         <!-- Ingin makan apa end -->
         <br><br>
 
+        <?php
+        if (isset($_POST["carialat"])) {
+          $alat = carialat($_POST);
+        } else {
+          $alat = carialat('teflon');
+        }
+
+        ?>
+
         <!-- Alat masak start -->
         <div>
           <h4><b>Alat masakmu</b></h4>
-          <div>
-            <button type="button" class="btn btn-cookpad">Teflon</button>
-            <button type="button" class="btn bg-dark-subtle">Magic Com</button>
-            <button type="button" class="btn bg-dark-subtle">Presto</button>
-            <button type="button" class="btn bg-dark-subtle">Oven</button>
-            <button type="button" class="btn bg-dark-subtle">Dandang</button>
+          <div class="d-flex">
+            <form method="post" action="#hasil-alat">
+              <input type="hidden" value="teflon" name="keyword">
+              <button type="submit" name="carialat" class="btn btn-cookpad">Teflon</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="magic" name="keyword">
+              <button type="submit" name="carialat" class="btn btn-cookpad">Magic com</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="presto" name="keyword">
+              <button type="submit" name="carialat" class="btn btn-cookpad">Presto</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="oven" name="keyword">
+              <button type="submit" name="carialat" class="btn btn-cookpad">Oven</button>
+            </form>
+            &nbsp;
+            <form method="post">
+              <input type="hidden" value="dandang" name="keyword">
+              <button type="submit" name="carialat" class="btn btn-cookpad">Dandang</button>
+            </form>
           </div>
 
           <div>
@@ -331,26 +310,12 @@ require_once "function.php";
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Semua</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="#">Makanan 1</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Makanan 2</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Makanan 3</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Makanan 4</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Makanan 5</a>
-              </li>
             </ul>
           </div>
 
           <div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+              <?php foreach($alat as $alat): ?>
               <div class="col">
                 <div>
                   <p>user_name_account</p>
@@ -367,48 +332,13 @@ require_once "function.php";
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+              <?php endforeach ?>
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           <br>
-
-          <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-secondary"><span><img src="asset/img/cari.png" alt="" height="20"></span> Temukan
-              ide
-              lain</button>
-          </div>
 
           <br>
         </div>
@@ -416,69 +346,65 @@ require_once "function.php";
 
         <!-- Olahan Kentang start -->
         <div>
+          <?php
+          $tips = tampilkan("SELECT user.username, tips.tips_id, langkah_tips.gambar_langkah, tips.tanggalbuat, tips.judul FROM tips LEFT JOIN user ON tips.user_id = user.user_id JOIN langkah_tips ON tips.tips_id = langkah_tips.tips_id WHERE NOT gambar_langkah = 'default_gambar.jpg' GROUP BY tips.tips_id limit 5");
+          // $gambar = tampilkan("SELECT gambar_langkah, tips.judul FROM langkah_tips JOIN tips ON langkah_tips.tips_id = tips.tips_id WHERE NOT gambar_langkah = 'default_gambar.jpg' GROUP BY tips.tips_id");
+          // $tips1 = array_merge($tips, $gambar);
+          // $gambar = tampilkan("SELECT gambar_langah FROM langkah_tips")
+          // echo "<pre>";
+          // var_dump($tips);
+          // echo "</pre>";
+          // die();
+          ?>
           <h4><b>Tips</b></h4>
-          <p>Cocok jadi makanan pendamping hari raya</p>
+          <p>Tips buat dapur kamu</p>
 
           <div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
+            <div class="row row-cols-1 row-cols-md-5 g-4">
+              <?php
+              foreach ($tips as $tips) {
+                // if (isset($tips['gambar_langkah'])) {
+                //   break;
+                // } else {
+                // var_dump($tips['langkah'])
+                ?>
+                <div class="col">
+                  <div>
+                    <p>
+                      <?= $tips['username'] ?>
+                    </p>
+                  </div>
+                  <a href="index.php?p=tips&idt=<?= $tips['tips_id'] ?>" class="text-decoration-none">
+                    <div class="card">
+                      <img class="card-img" <?php
+                      $g = $tips['gambar_langkah'];
+                      $gambar = "gambar/$g";
+                      if (file_exists($gambar)) { ?> src="gambar/<?= $tips['gambar_langkah'] ?>" <?php } else {
+                        //
+                      } ?>
+                        alt="...">
+                      <div class="card-img-overlay">
+                        <p class="card-text"><small>
+                            <?= $tips['tanggalbuat'] ?>
+                          </small></p>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <?= $tips['judul'] ?>
+                        </h5>
+                        <p class="card-text">Reaksi</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-                <div class="card">
+                <?php
+              }
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
-
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
-
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
+              ?>
             </div>
           </div>
 
           <br>
-
-          <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-secondary"><span><img src="asset/img/cari.png" alt="" height="20"></span> Temukan
-              Tips lainnya</button>
-          </div>
-
           <br>
         </div>
         <!-- Olahan kentang end -->
@@ -539,55 +465,52 @@ require_once "function.php";
           <h4><b>Resep Terbaru</b></h4>
 
           <div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+            <div class="row row-cols-1 row-cols-md-4 g-4">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+              <?php
+              $resep = tampilkan("SELECT resep.*, user.username,user.user_id FROM resep join user ON resep.user_id = user.user_id order by resep.resep_id desc limit 4");
+              // echo "<pre>";
+              // var_dump($resep);
+              // echo "</pre>";
+              
+              foreach ($resep as $resep) {
+                ?>
+                <div class="col">
+                  <a href="index.php?p=detail_profil&idu=<?= $resep["user_id"] ?>" class="text-decoration-none text-dark">
+                    <div class="d-flex">
+                      <img style="width: 35px;height: 35px;" class="rounded-circle mx-1" src="asset/img/profil.png"
+                        alt="">
+                      <p class="">
+                        <?= $resep["username"] ?> <br>
+                        <small>
+                          <?php
+                          $waktu = waktu($resep["tanggalbuat"]);
+                          ?>
+                          <?= $waktu ?>
+                        </small>
+                      </p>
+                    </div>
+                  </a>
+                  <a href="index.php?p=detail_resep&idr=<?= $resep["resep_id"] ?>" class="text-decoration-none">
+                    <div class="card">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+                      <img class="card-img" src="gambar/<?= $resep["image"] ?>" alt="...">
+                      <div class="card-img-overlay">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <?= $resep["judul"] ?>
+                        </h5>
+                        <p class="card-text">Reaksi</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-              </div>
+                <?php
+              }
+              ?>
+
             </div>
           </div>
 

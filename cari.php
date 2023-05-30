@@ -23,23 +23,8 @@
                 <button class="input-group-text btn-cookpad">Cari</button>
               </div>
 
-              <div>
-                <p><b>PENCARIAN POPULER HARI INI  </b></p>
-
-                <p><b><a href="">rendang daging</a> &nbsp;  &nbsp;<a href="">kacang bawang</a> &nbsp; &nbsp;<a href="">gulai ayam</a> &nbsp; &nbsp;<a href="">semur daging</a></b></p>
-                
-                <span><button class="btn btn-secondary">katergori</button></span>
-
-                <p><b>Tabel dengan gambar masakan dan judul masakan</b></p>
-                
-              </div>
               <br>
 
-              <center>
-                <button class="btn btn-secondary">
-                  <span><img class="img-nav" src="asset/img/tambah.png" alt="" height="20"></span>Tulis Resep</button>
-              </div>
-              </center>
             <!-- Search Bar end -->
             <br><br>
 
@@ -97,63 +82,7 @@
             <!-- Riwayat End -->
 
             <!-- Berdasarkan Pencarian Start -->
-            <div>
-              <h5><b>Berdasarkan Pencarianmu Sebelumnya</b></h5>
-              <br>
-              
-              <table cellpadding="10">
-                <th>
-                  <tr>
-                    <td>
-                      <div style="width: 15rem;">
-                        <img src="asset/img/donat.jpeg" class="card-img-top" alt="..." style="width: 15rem;">
-                          <div class="card-body">
-                          <h5 class="">Judul Masakan</h5>
-                          <p class="">Creator / Pembuat Resep </p>
-                          </div>
-                      </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div style="width: 15rem;">
-                        <img src="asset/img/donat.jpeg" class="card-img-top" alt="..." style="width: 15rem;">
-                          <div class="card-body">
-                          <h5 class="">Judul Masakan</h5>
-                          <p class="">Creator / Pembuat Resep </p>
-                          </div>
-                      </div>
-                    </td>
-                  </tr>
-                </th>
-
-                <th>
-                  <tr>
-                    <td>
-                      <div style="width: 15rem;">
-                        <img src="asset/img/donat.jpeg" class="card-img-top" alt="..." style="width: 15rem;">
-                          <div class="card-body">
-                          <h5 class="">Judul Masakan</h5>
-                          <p class="">Creator / Pembuat Resep </p>
-                          </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div style="width: 15rem;">
-                        <img src="asset/img/donat.jpeg" class="card-img-top" alt="..." style="width: 15rem;">
-                          <div class="card-body">
-                          <h5 class="">Judul Masakan</h5>
-                          <p class="">Creator / Pembuat Resep </p>
-                          </div>
-                      </div>
-                    </td>
-                  </tr>
-                </th>
-              </table>
-              
-            </div>
-            <br><br>
+            
             <!-- Berdasarkan Pencarian End -->
 
 

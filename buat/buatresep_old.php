@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="../asset/css/tambahan.css">
     <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
-    <script src="../asset/js/jquery.min.js"></script>
+    <!-- <script src="../asset/js/jquery.min.js"></script> -->
     <script>
         function copyBahan() {
             $("#form-bahan")

@@ -24,7 +24,7 @@
             <div class="p-3 d-inline">
               <br>
               <a href="/id/pengguna/38901259">
-                <h1 class="font-semibold">Dinira Wijaya</h1>
+                <h1 class="font-semibold"><?= $_SESSION["username"] ?></h1>
               </a>
               <div>
                 <p>
@@ -58,10 +58,10 @@
         <div class="card overflow-scroll">
           <br>
           <p class="container">
-            <button type="button" class="btn btn-white text-black"><b>Tersimpan</b></button>
-            <button type="button" class="btn btn-white text-black" name="resep"><b>Resep Saya</b></button>
-            <button type="button" class="btn btn-white text-black" name="cooksnap"><b>Cooksnap</b></button>
-            <button type="button" class="btn btn-white text-black" name="tips"><b>Tips</b></button>
+            <a href="index.php?p=profil" class="btn btn-white text-black"><b>Tersimpan</b></a>
+            <a href="index.php?p=profil&m=resep" class="btn btn-white text-black" name="resep"><b>Resep Saya</b></a>
+            <a href="index.php?p=profil&m=cooksnap" class="btn btn-white text-black" name="cooksnap"><b>Cooksnap</b></a>
+            <a href="index.php?p=profil&m=tips" class="btn btn-white text-black" name="tips"><b>Tips</b></a>
             <a class="btn btn-white text-black" href="index.php?p=profil&m=cookbook">
               <b>Cookbook</b>
             </a>
@@ -77,6 +77,15 @@
         switch ($_GET['m']) {
           case "cookbook":
             include "profil_cookbook.php";
+            break;
+          case "resep":
+            include "profil_resep.php";
+            break;
+          case "cooksnap":
+            include "profil_cooksnap.php";
+            break;
+          case "tips":
+            include "profil_tips.php";
             break;
         }
       } else {

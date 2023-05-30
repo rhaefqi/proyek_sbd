@@ -80,14 +80,17 @@ if (empty($_SESSION["id_user"])) { ?>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                    <?php var_dump($_SESSION) ?> 
+                    <li class="nav-item">
+                        <?php var_dump($_SESSION) ?>
+
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="index.php"><img class="img-nav" src="asset/img/beranda.png" alt=""
                                 height="20">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=cari"><img class="img-nav" src="asset/img/cari.png" alt=""
+                        <a class="nav-link" href="index.php#search_section"><img class="img-nav" src="asset/img/cari.png" alt=""
                                 height="20">Cari</a>
                     </li>
                     <li class="nav-item">
@@ -95,8 +98,8 @@ if (empty($_SESSION["id_user"])) { ?>
                                 height="20">Buat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=aktivitas"><img class="img-nav" src="asset/img/aktivitas.png" alt=""
-                                height="20">Aktivitas</a>
+                        <a class="nav-link" href="index.php?p=aktivitas"><img class="img-nav" src="asset/img/aktivitas.png"
+                                alt="" height="20">Aktivitas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?p=profil"><img class="img-nav" src="asset/img/profil.png" alt=""

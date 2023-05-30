@@ -13,8 +13,14 @@
         <h4><b>Tulis Catatan Masakmu</b></h4>
         <p>Bantu pengguna lain mendapatkan ide memasak</p>
 
-        <p><b><a class="btn btn-info" href="">Resep</a> &nbsp; &nbsp;<a class="btn btn-info" href="">Tips</a> &nbsp;
-            &nbsp;<a class="btn btn-info" href="">Cookbook</a></b></p>
+        <p>
+          <b>
+            <a class="btn btn-info" href="index.php?p=buat_resep">Resep</a> &nbsp; &nbsp;
+            <a class="btn btn-info" href="index.php?p=buat_tips">Tips</a> &nbsp; &nbsp;
+            <a class="btn btn-info" href="buat/buatcookbook.php">Cookbook</a>
+          </b>
+        </p>
+
         <br><br>
 
       </div>
