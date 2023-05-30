@@ -29,7 +29,7 @@
             </div>
 
             <div class="carousel-item">
-              <img src="asset/img/lpmasakan5.jpg" class="d-block w-100" alt="...">
+              <img src="asset/img/lpmasakan5.png" class="d-block w-100" alt="...">
               <p class="container">Judul Makanan5 dan Link</p>
             </div>
           </div>
