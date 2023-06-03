@@ -1,6 +1,6 @@
 <?php
 require_once "function.php";
-if (isset($_POST["submit"])) {
+if (isset($_POST["buat_tips"])) {
   tambahtips($_POST);
 }
 // var_dump($_SESSION)
@@ -49,7 +49,7 @@ if (isset($_POST["submit"])) {
             <div class="col-2"></div>
             <center class="mt-4 mb-3">
               <a href="index.php?p=buat" class="btn btn-secondary">Kembali</a>
-              <button type="submit" name="submit" class="btn btn-cookpad">Terbitkan</button>
+              <button type="submit" name="buat_tips" class="btn btn-cookpad">Terbitkan</button>
             </center>
           </form>
         </div>

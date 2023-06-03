@@ -11,26 +11,21 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="asset/img/lpmasakan1.jpg" class="d-block w-100" alt="...">
-              <p class="container">Judul Makanan1 dan Link</p>
             </div>
             <div class="carousel-item">
               <img src="asset/img/lpmasakan2.jpg" class="d-block w-100" alt="...">
-              <p class="container">Judul Makanan2 dan Link</p>
             </div>
 
             <div class="carousel-item">
               <img src="asset/img/lpmasakan3.jpg" class="d-block w-100" alt="...">
-              <p class="container">Judul Makanan3 dan Link</p>
             </div>
 
             <div class="carousel-item">
               <img src="asset/img/lpmasakan4.jpg" class="d-block w-100" alt="...">
-              <p class="container">Judul Makanan4 dan Link</p>
             </div>
 
             <div class="carousel-item">
               <img src="asset/img/lpmasakan5.png" class="d-block w-100" alt="...">
-              <p class="container">Judul Makanan5 dan Link</p>
             </div>
           </div>
         </div>
@@ -40,107 +35,56 @@
 
         <!-- Masak Apa Saja Start -->
         <div class="card container">
-          <h4>Masak apa saja yang ada di kulkasmu!</h4>
-
-          <div class="card container opac-cookpad">
-            <br>
-            <p>Kombinasikan beberapa bahan untuk mendapatkan ide baru. <a href="#">Hanya di aplikasi Cookpad</a></p>
-          </div>
-          <br>
-
-          <div>
-            <button type="button" class="btn btn-cookpad">Bayam</button>
-            <button type="button" class="btn bg-dark-subtle">Tepung Terigu</button>
-            <button type="button" class="btn bg-dark-subtle">Labu Siam</button>
-            <button type="button" class="btn bg-dark-subtle">Buncis</button>
-            <button type="button" class="btn bg-dark-subtle">Jagung</button>
-          </div>
-
-          <br>
-
-          <div>
-            <ul class="nav nav-underline">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Semua</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="#">Olahan 1</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 2</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 3</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 4</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Olahan 5</a>
-              </li>
-            </ul>
-          </div>
+          <h3>Lihat Resep</h3>
 
           <div>
             <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+              <?php
+              $resep = tampilkan("SELECT resep.*, user.username,user.user_id FROM resep join user ON resep.user_id = user.user_id order by resep.resep_id desc limit 3");
+              // echo "<pre>";
+              // var_dump($resep);
+              // echo "</pre>";
+              
+              foreach ($resep as $resep) {
+                ?>
+                <div class="col">
+                  <!-- <a href="index.php?p=detail_profil&idu=<?= $resep["user_id"] ?>" class="text-decoration-none text-dark"> -->
+                    <div class="d-flex">
+                      <img style="width: 35px;height: 35px;" class="rounded-circle mx-1" src="asset/img/profil.png"
+                        alt="">
+                      <p class="">
+                        <?= $resep["username"] ?> <br>
+                        <small>
+                          <?php
+                          $waktu = waktu($resep["tanggalbuat"]);
+                          ?>
+                          <?= $waktu ?>
+                        </small>
+                      </p>
+                    </div>
+                  <!-- </a> -->
+                  <!-- <a href="index.php?p=detail_resep&idr=<?= $resep["resep_id"] ?>" class="text-decoration-none"> -->
+                    <div class="card">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div>
-                  <p>user_name_account</p>
-                </div>
-                <div class="card">
+                      <img class="card-img" style="width: 260px;height: 200px;" src="gambar/<?= $resep["image"] ?>"
+                        alt="...">
+                      <div class="card-img-overlay">
 
-                  <img class="card-img" src="asset/img/logo.png" alt="...">
-                  <div class="card-img-overlay">
-                    <p class="card-text"><small>Last updated 3 mins ago</small></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Nama Makanan</h5>
-                    <p class="card-text">Reaksi</p>
-                  </div>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <?= $resep["judul"] ?>
+                        </h5>
+                      </div>
+                    </div>
+                  <!-- </a> -->
                 </div>
-              </div>
+              <?php } ?>
+
             </div>
           </div>
 
-          <br>
-
-          <div class="text-center">
-            <form action="" style="width: 250px;">
-              <input class="form-control text-center" type="search" placeholder="Temukan Ide Lainnya">
-            </form>
-          </div>
 
           <br>
         </div>
@@ -152,33 +96,31 @@
           <p>Jelajahi ide-ide masak baru bersama</p>
 
           <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col">
-              <div class="card" style="width: 12rem;">
-                <img src="asset/img/lpcb1.jpg" class="card-img-top" alt="...">
+            <?php
+            $cookbook = tampilkan("SELECT cookbook.*, user.id_cookpad FROM cookbook join user on cookbook.user_id = user.user_id order by cookbook.cookbook_id desc limit 4");
+            // echo "<pre>";
+            // var_dump($cookbook);
+            // echo "</pre>";
+            foreach ($cookbook as $cb) {
+              $no = rand(1, 4);
+              ?>
+              <div class="col">
+                <div class="card" style="width: 12rem;">
+                  <a href="index.php?p=cookbook&idcb=<?= $cb["cookbook_id"] ?>">
+                    <img src="asset/img/lpcb<?= $no ?>.jpg" class="card-img-top" alt="...">
+                  </a>
+                  <div class="card-body">
+                    <p>
+                      <?= $cb["judul"] ?> <br>
+                      @
+                      <?= $cb["id_cookpad"] ?>
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col">
-              <div class="card" style="width: 12rem;">
-                <img src="asset/img/lpcb2.jpg" class="card-img-top" alt="...">
-              </div>
-            </div>
-            <div class="col">
-              <div class="card" style="width: 12rem;">
-                <img src="asset/img/lpcb3.jpg" class="card-img-top" alt="...">
-              </div>
-            </div>
-            <div class="col">
-              <div class="card" style="width: 12rem;">
-                <img src="asset/img/lpcb4.jpg" class="card-img-top" alt="...">
-              </div>
-            </div>
+            <?php } ?>
           </div>
           <br>
-          <div class="text-center">
-            <form action="" style="width: 250px;">
-              <input class="form-control text-center" type="search" placeholder="Lihat Semua Cookbook">
-            </form>
-          </div>
 
         </div>
 
@@ -190,13 +132,52 @@
         <div class="card bg-cookpad">
           <div class="text-center">
             <h3>Masak Bareng Lebih Seru</h3>
-            <p>Kirim pertanyaan, bagikan ide, dapatkan tips</p>
+            <p>dapatkan tips</p>
           </div>
 
-          <div class="container">
-            <div class="card">
+          <?php $tips = tampilkan("SELECT user.username, tips.tips_id, langkah_tips.gambar_langkah, langkah_tips.langkah, tips.tanggalbuat, tips.judul FROM tips LEFT JOIN user ON tips.user_id = user.user_id JOIN langkah_tips ON tips.tips_id = langkah_tips.tips_id WHERE NOT gambar_langkah = 'default_gambar.jpg' GROUP BY tips.tips_id order by tips.tips_id desc limit 3"); ?>
 
-              <div>
+          <div class="container d-flex">
+            <!-- <div class="card d-flex"> -->
+
+            <?php
+            foreach ($tips as $tips) {
+              // if (isset($tips['gambar_langkah'])) {
+              //   break;
+              // } else {
+              // var_dump($tips["gambar_langkah"])
+              ?>
+              <div class="col">
+                <div>
+                  <p>
+                    <?= $tips['username'] ?>
+                  </p>
+                </div>
+                <!-- <a href="index.php?p=detail_tips&idt=<?= $tips['tips_id'] ?>" class="text-decoration-none"> -->
+                <div class="card" style="width: 235px;">
+                  <?php if ($tips["gambar_langkah"] === 'default_gambar.jpg') { ?>
+                    <p>
+                      <?= $tips["langkah"] ?>
+                    </p>
+                  <?php } else { ?>
+                    <img alt="profil" src="gambar/<?= $tips['gambar_langkah'] ?>" style="width: 235px; height: 150px;">
+                  <?php } ?>
+                  <div class="card-img-overlay">
+                    <p class="card-text"><small>
+                        <?= $tips['tanggalbuat'] ?>
+                      </small></p>
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      <?= $tips['judul'] ?>
+                    </h6>
+                  </div>
+                </div>
+                <!-- </a> -->
+              </div>
+            <?php } ?>
+
+            <!-- <div>
                 <div class="card-body">
                   <small class="card-title"><b>user_name_account</b> membagikan resep</small>
                   <form action="">
@@ -226,9 +207,9 @@
                   <small class="card-title"><b>user_name_account</b> membagikan komentar</small>
                   <p>"Isi Komentar"</p>
                 </div>
-              </div>
+              </div> -->
 
-            </div>
+            <!-- </div> -->
           </div>
           <br>
         </div>
@@ -238,7 +219,7 @@
 
         <!-- Rekomendasi Resep Start -->
 
-        <div class="card container">
+        <!-- <div class="card container">
           <h3>Resep untuk semua orang</h3>
           <p>Jelajahi resep yang cocok dengan tiap kebutuhan</p>
 
@@ -282,7 +263,7 @@
           </div>
           <br>
 
-        </div>
+        </div> -->
 
         <!-- rekomendasi resep end -->
 

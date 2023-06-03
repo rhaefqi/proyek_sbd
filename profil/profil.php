@@ -1,3 +1,12 @@
+<?php
+// var_dump($_SESSION);
+$uid = $_SESSION["id_user"];
+
+$user = tampilkan("SELECT * from user where user_id = $uid")[0];
+// var_dump($gambar);
+// $g = $user['profil_image'];
+// $gambar_p = "gambar/$g";
+?>
 <!-- Body Starts -->
 
 <div style="background-color: #f8f6f2;">
@@ -14,7 +23,11 @@
           <div class="col-2">
             <div class="p-3">
               <a href="#">
-                <img alt="Dinira Wijaya" class="rounded-circle" src="asset/img/bekal.jpeg" width="100%">
+
+
+                <img alt="profil" class="rounded-circle" <?php if (empty($user["profil_image"])) { ?>
+                    src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $user['profil_image'] ?>" <?php } ?>
+                  style="width: 90px; height: 90px;">
               </a>
             </div>
           </div>
@@ -23,16 +36,38 @@
           <div class="col-8 ps-0">
             <div class="p-3 d-inline">
               <br>
-              <a href="/id/pengguna/38901259">
-                <h1 class="font-semibold"><?= $_SESSION["username"] ?></h1>
+              <a href="" class="text-decoration-none text-black">
+                <h1 class="font-semibold">
+                  <?= $user["username"] ?>
+                </h1>
               </a>
               <div>
                 <p>
-                  <a href="/id/pengguna/38901259">
-                    <span>@id_pengguna</span>
+                  <a href="" class="text-decoration-none text-black">
+                    <span>@
+                      <?= $user["id_cookpad"] ?>
+                    </span>
                   </a>
                 </p>
-                <a class="btn btn-light" href="/id/pengguna/38901259">Lihat Profil Publik</a>
+              </div>
+              <div class="mb-1">
+                <?= $user["deskripsi"] ?>
+              </div>
+              <?php
+              $follow = hitung("SELECT * from follow where pengikut = $uid");
+              $follower = hitung("SELECT * from follow where diikuti = $uid");
+              ?>
+              <div class="row">
+                <div class="col-3">
+                  <p><b>
+                      <?= $follow ?>
+                    </b> Mengikuti</p>
+                </div>
+                <div class="col-3">
+                  <p><b>
+                      <?= $follower ?>
+                    </b> Pengikut</p>
+                </div>
               </div>
             </div>
           </div>

@@ -62,7 +62,7 @@ function register($data)
              document.location.href = 'signup.php';
          </script> ";
     } else {
-        mysqli_query($koneksi, "INSERT INTO user (name, email, password) VALUES ('$Name', '$Email', '$Password')");
+        mysqli_query($koneksi, "INSERT INTO user (username, email, password) VALUES ('$Name', '$Email', '$Password')");
         echo "
     <script>
         alert('Registrasi Akun Berhasil');
@@ -83,11 +83,10 @@ function login($data)
 
     $sql = "SELECT * FROM user WHERE (email = '{$email_login}') AND password = '{$pass_login}'";
     $query = mysqli_query($koneksi, $sql);
-    // $tes = mysqli_fetch_assoc($query);
-    // echo"<pre>";
-    // var_dump($tes);
-    // echo"</pre>";
-    // // die;
+
+    $adminsql = "SELECT * FROM admin WHERE (email = '{$email_login}') AND password = '{$pass_login}'";
+    $adminquery = mysqli_query($koneksi, $adminsql);
+
 
     if (!$query) {
         die("Query gagal" . mysqli_error($koneksi));
@@ -95,6 +94,7 @@ function login($data)
 
     $email = null;
 
+    //user
     while ($row = mysqli_fetch_array($query)) {
         // echo "<pre>";
         // var_dump($row);
@@ -104,6 +104,7 @@ function login($data)
         $pass = $row['password'];
         $user = $row['username'];
         $id_user = $row['user_id'];
+        $id_cookpad = $row['id_cookpad'];
     }
     if (($email_login == $email) && $pass_login == $pass) {
         echo
@@ -114,11 +115,24 @@ function login($data)
         $_SESSION['Email'] = $email;
         $_SESSION['username'] = $user;
         $_SESSION['id_user'] = $id_user;
-    } else {
+        $_SESSION['id_cookpad'] = $id_cookpad;
+    }
+
+    // admin
+    while ($row = mysqli_fetch_array($adminquery)) {
+        $email = $row['email'];
+        $name = $row['name'];
+        $pass = $row['password'];
+        $admin_id = $row['admin_id'];
+    }
+    if (($email_login == $email) && $pass_login == $pass) {
         echo
             "<script>
-            alert('User tidak ditemukan');
-            </script>";
+                        alert('Selamat kamu telah login sebagai admin');
+                        document.location.href = 'admin.php';
+                </script>";
+        $_SESSION['name'] = $name;
+        $_SESSION['admin_id'] = $admin_id;
     }
 }
 
@@ -181,12 +195,175 @@ function updatepassword($data)
     }
 }
 
+function update($data)
+{
+    global $koneksi;
+    $user_id = $data["user_id"];
+    $username = $data["Username"];
+    $name = $data["Name"];
+    $email = $data["Email"];
+    $password = $data["Password"];
+    $asal = $data["Asal"];
+    $deskripsi = $data["Deskripsi"];
+    $profil_image = $data["Profil_Image"];
+
+    $sql = mysqli_query($koneksi, "SELECT * FROM user WHERE user_id = '$user_id'");
+    $oldData = mysqli_fetch_assoc($sql);
+
+    $dataChanged = false; // Flag untuk menandakan apakah ada perubahan data
+
+    // Memeriksa apakah ada perubahan data
+    if ($oldData['username'] !== $username || $oldData['name'] !== $name || $oldData['email'] !== $email || $oldData['password'] !== $password || $oldData['asal'] !== $asal || $oldData['deskripsi'] !== $deskripsi || $oldData['profil_image'] !== $profil_image) {
+        $dataChanged = true;
+    }
+
+    if ($dataChanged) {
+        $sql = "UPDATE user
+        SET 
+        username = '$username',
+        name = '$name',
+        email = '$email',
+        password = '$password',
+        asal = '$asal',
+        deskripsi = '$deskripsi',
+        profil_image = '$profil_image'
+        WHERE user_id = '$user_id'";
+
+        $query = mysqli_query($koneksi, $sql);
+        if ($query) {
+            echo "
+            <script>
+                alert('Berhasil Diubah');
+                document.location.href = 'tables.php';
+            </script>";
+        } else {
+            echo "
+            <script>
+                alert('Gagal diubah');
+                document.location.href = 'tables.php';
+            </script>";
+        }
+    } else {
+        echo "
+        <script>
+            alert('Tidak ada data yang diperbarui');
+            document.location.href = 'tables.php';
+        </script>";
+    }
+}
+
+function delete($data)
+{
+    global $koneksi;
+    $user_id = $data["user_id"];
+
+    // Menghapus entri terkait dalam tabel cookbook
+    $deleteCookbookSql = "DELETE FROM cookbook WHERE user_id = '$user_id'";
+    $deleteCookbookQuery = mysqli_query($koneksi, $deleteCookbookSql);
+
+    // Menghapus entri terkait dalam tabel langkah_resep
+    $deleteLangkahResepSql = "DELETE FROM langkah_resep WHERE resep_id IN (SELECT resep_id FROM resep WHERE user_id = '$user_id')";
+    $deleteLangkahResepQuery = mysqli_query($koneksi, $deleteLangkahResepSql);
+
+    // Menghapus entri terkait dalam tabel resep
+    $deleteResepSql = "DELETE FROM resep WHERE user_id = '$user_id'";
+    $deleteResepQuery = mysqli_query($koneksi, $deleteResepSql);
+
+    // Menghapus entri terkait dalam tabel langkah_tips
+    $deleteLangkahTipsSql = "DELETE FROM langkah_tips WHERE tips_id IN (SELECT tips_id FROM tips WHERE user_id = '$user_id')";
+    $deleteLangkahTipsQuery = mysqli_query($koneksi, $deleteLangkahTipsSql);
+
+    // Menghapus entri terkait dalam tabel tips
+    $deleteTipsSql = "DELETE FROM tips WHERE user_id = '$user_id'";
+    $deleteTipsQuery = mysqli_query($koneksi, $deleteTipsSql);
+
+    // Menghapus pengguna dari tabel user
+    $deleteUserSql = "DELETE FROM user WHERE user_id = '$user_id'";
+    $deleteUserQuery = mysqli_query($koneksi, $deleteUserSql);
+
+    if ($deleteCookbookQuery && $deleteLangkahResepQuery && $deleteResepQuery && $deleteLangkahTipsQuery && $deleteTipsQuery && $deleteUserQuery) {
+        echo "
+        <script>
+            alert('Berhasil Dihapus');
+            document.location.href = 'tables.php';
+        </script>";
+    } else {
+        echo "
+        <script>
+            alert('Gagal dihapus');
+            document.location.href = 'tables.php';
+        </script>";
+    }
+}
+
+function tambahBahanPilihan($data)
+{
+    global $koneksi;
+    $deskripsi = $data['deskripsi'];
+    $bahan = $data['bahan'];
+    $bp_image = upload();
+
+    if ($deskripsi && $bp_image) {
+        $query = "INSERT INTO bahan_pilihan (deskripsi, bp_image, bahan) VALUES ('$deskripsi', '$bp_image', '$bahan')";
+        if ($koneksi->query($query) === TRUE) {
+            echo "
+            <script>
+                alert('Berhasil ditambah');
+                document.location.href = '';
+            </script>";
+        } else {
+            echo "
+            <script>
+                alert('Gagal ditambah');
+                document.location.href = '';
+            </script>";
+        }
+    } else {
+        echo "
+        <script>
+            alert('Gagal ditambah: Deskripsi atau kirim gambar belum diisi');
+            document.location.href = '';
+        </script>";
+    }
+}
+
+function aktivitas($data)
+{
+    global $koneksi;
+    $pesan = $data['pesan'];
+    $name = $_SESSION['name'];
+    $admin_id = $_SESSION['admin_id'];
+
+    if ($pesan) {
+        $query = "INSERT INTO aktivitas (pesan,name, admin_id) VALUES ('$pesan','$name', '$admin_id')";
+        if ($koneksi->query($query) === TRUE) {
+            echo "
+            <script>
+            alert('Berhasil dikirim');
+        document.location.href = '';
+        </script>";
+        } else {
+            echo "
+        <script>
+            alert('Gagal ditambah');
+            document.location.href = '';
+        </script>";
+        }
+
+    } else {
+        echo "
+        <script>
+            alert('Gagal ditambah: tidak ada data aktivasi yang dikirimkan');
+            document.location.href = '';
+        </script>";
+    }
+}
 
 
 function tambahresep($data)
 {
     echo "<pre>";
-    var_dump($data);
+    // var_dump($data);
     // var_dump($_FILES);
     echo "</pre>";
     //  die();
@@ -243,6 +420,125 @@ function tambahresep($data)
 
 }
 
+function editresep($data)
+{
+    // echo"<pre>";
+    // var_dump($data);
+    // echo"</pre>";
+    // die;
+
+    global $koneksi;
+    $id_user = $_SESSION['id_user'];
+    $judul = $data['judulResep'];
+    $deskripsi = $data['deskripsi'];
+    $asal = $data['asal'];
+    $porsi = $data['porsi'];
+    $lamaMemasak = $data['lamaMemasak'];
+    $langkah = $data['langkah'];
+    $bahan = $data['bahan'];
+    $idr = $data['idr'];
+    $gambar_lama = $data["gambar_lama"];
+    $gambar_utama_lama = $data["gambar_utama_lama"];
+    // langkah($data['bahan'], 1, 1);
+    // bahanresep($bahan, 1);
+
+    // langkah($data['langkah']);
+    // $cekgambar = tampilkan("SELECT image from resep where resep_id = $idr")[0]["image"];
+    if ($_FILES['gambar']['error'] === 4) {
+        // var_dump($gambar_lama);
+        // die;
+        $gambar = $gambar_utama_lama;
+    } else {
+        $gambar = upload();
+    }
+    // $gambar = upload();
+
+    if (!$gambar) {
+        echo "
+        <script>
+        alert('resep gagal ditambahkan');
+            document.location.href = '';
+        </script>";
+    } else {
+        $resep = "UPDATE resep set judul = '$judul', excerpt = '$deskripsi', lama_memasak = '$lamaMemasak', asal_masakan = '$asal', porsi = '$porsi', image = '$gambar' where resep_id  = $idr ";
+    }
+    if ($koneksi->query($resep) === TRUE) {
+
+        editlangkah_r($langkah, $idr, $gambar_lama); //, $data['gambar']
+        editbahan_r($bahan, $idr);
+        echo "
+                    <script>
+                        alert('resep berhasil diedit');
+                        document.location.href = 'index.php?p=edit_resep&idr=$idr';
+                    </script>";
+    } else {
+        echo "
+                    <script>
+                        alert('resep gagal diedit');
+                        document.location.href = 'buatresep.php';
+                    </script>";
+    }
+}
+
+function editlangkah_r($data, $idr, $gambar_lama)
+{
+
+    global $koneksi;
+
+    $jlh_langkah = count($data);
+    // $post_id = $idr;
+    // $jenis_post = $jenis;
+    $id = tampilkan("SELECT langkah_resep_id from langkah_resep where resep_id = $idr ");
+    // echo "<pre>";
+    // var_dump($data);
+    // var_dump($gambar_lama);
+    // var_dump($_FILES);
+    // echo "</pre>";
+    // die;
+    // $gambarlama = 1;
+
+    for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
+        // $gambar_langkah = $gambar[$i];
+        $langkah = $data[$i];
+        $idr = $id[$i]["langkah_resep_id"];
+
+        if ($_FILES['gambar_langkah']['error'][$i] === 4) {
+            // var_dump($gambar_lama);
+            // die;
+            $gambar_langkah = $gambar_lama[$i];
+        } else {
+            $gambar_langkah = upload2($i);
+
+        }
+        // $gambar = upload();
+
+        if ($gambar_langkah == 'default_gambar.jpg') {
+            mysqli_query($koneksi, "UPDATE langkah_resep set langkah = '$langkah', gambar_langkah = '$gambar_langkah' where langkah_resep_id = $idr ");
+        } else {
+            mysqli_query($koneksi, "UPDATE langkah_resep set langkah = '$langkah', gambar_langkah = '$gambar_langkah' where langkah_resep_id = $idr ");
+        }
+    }
+}
+
+function editbahan_r($data, $idr)
+{
+    global $koneksi;
+
+    // echo '<pre>';
+    // var_dump($data);
+    // echo '</pre>';
+    // die();
+    $id = tampilkan("SELECT br_id from bahan_resep where resep_id = $idr ");
+
+    $jlh_bahan = count($data);
+    for ($i = 0; $i <= $jlh_bahan - 1; $i++) {
+        $bahan = $data[$i];
+        $idbr = $id[$i]["br_id"];
+        mysqli_query($koneksi, "UPDATE bahan_resep set bahan = '$bahan' where br_id = $idbr ");
+    }
+
+}
+
 function bahanresep($data, $id)
 {
     global $koneksi;
@@ -253,11 +549,11 @@ function bahanresep($data, $id)
     // die();
 
     $jlh_bahan = count($data);
-
     for ($i = 0; $i <= $jlh_bahan - 1; $i++) {
         $bahan = $data[$i];
         mysqli_query($koneksi, "INSERT into bahan_resep(resep_id, bahan) values ($id, '$bahan')");
     }
+
 
 }
 
@@ -282,7 +578,7 @@ function tambahtips($data)
         while ($isi = mysqli_fetch_array($hasil_post)) {
             $post_id = $isi['tips_id'];
         }
-        var_dump($post_id);
+        // var_dump($post_id);
         // die();
 
         langkah($langkah, $post_id, 2); //, $data['gambar']
@@ -300,6 +596,87 @@ function tambahtips($data)
                     </script>";
     }
 }
+function edittips($data)
+{
+    global $koneksi;
+    // echo "<pre>";
+    // var_dump($data);
+    // echo "</pre>";
+
+    $judul_tips = $data['judul_tips'];
+    $langkah = $data['langkah'];
+    $gambar_lama = $data["gambar_lama"];
+    $idt = $data['idt'];
+    $user_id = $_SESSION['id_user'];
+    // die();
+
+    // $gambar = upload();
+
+    $tips = "UPDATE tips set judul = '$judul_tips' where tips_id = $idt";
+
+    if ($koneksi->query($tips) === TRUE) {
+        // $hasil_post = mysqli_query($koneksi, "SELECT tips_id FROM tips where tips_id = $idt");
+        // while ($isi = mysqli_fetch_array($hasil_post)) {
+        // $post_id = $isi['tips_id'];
+        // }
+        // var_dump($post_id);
+        // die();
+
+        editlangkah_t($langkah, $idt, $gambar_lama); //, $data['gambar']
+
+        echo "
+                    <script>
+                        alert('tips berhasil edit');
+                        document.location.href = '';
+                    </script>";
+    } else {
+        echo "
+                    <script>
+                        alert('tips gagal edit');
+                        document.location.href = 'buattips.php';
+                    </script>";
+    }
+}
+
+function editlangkah_t($data, $postid, $gambar_lama)
+{
+    global $koneksi;
+
+    $jlh_langkah = count($data);
+    $post_id = $postid;
+    // $jenis_post = $jenis;
+    $id = tampilkan("SELECT langkah_tips_id from langkah_tips where tips_id = $post_id ");
+    // echo "<pre>";
+    // var_dump($data);
+    // var_dump($gambar_lama);
+    // var_dump($_FILES);
+    // echo "</pre>";
+    // die;
+    // $gambarlama = 1;
+
+    for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
+        // $gambar_langkah = $gambar[$i];
+        $langkah = $data[$i];
+        $idl = $id[$i]["langkah_tips_id"];
+
+        if ($_FILES['gambar_langkah']['error'][$i] === 4) {
+            // var_dump($gambar_lama);
+            // die;
+            $gambar_langkah = $gambar_lama[$i];
+        } else {
+            $gambar_langkah = upload2($i);
+
+        }
+        // $gambar = upload();
+
+        if ($gambar_langkah == 'default_gambar.jpg') {
+            mysqli_query($koneksi, "UPDATE langkah_tips set langkah = '$langkah', gambar_langkah = '$gambar_langkah' where langkah_tips_id = $idl ");
+        } else {
+            mysqli_query($koneksi, "UPDATE langkah_tips set langkah = '$langkah', gambar_langkah = '$gambar_langkah' where langkah_tips_id = $idl ");
+        }
+    }
+
+}
 
 function tambahcookbook($data)
 {
@@ -311,20 +688,52 @@ function tambahcookbook($data)
 
     $cookbook = "INSERT INTO cookbook (judul, excerpt, user_id) VALUES ('$nama_cookbook', '$excerpt', $user_id)";
 
+    // var_dump($cek); die;
+
     if ($koneksi->query($cookbook) === TRUE) {
+        $tes = tampilkan("SELECT cookbook_id from cookbook order by cookbook_id desc")[0];
+        $cek = $tes["cookbook_id"];
         echo "
                     <script>
                         alert('cookbook berhasil ditambahkan');
-                        document.location.href = 'buatcookbook.php';
+                        document.location.href = 'index.php?p=cookbook&idcb=$cek';
                     </script>";
     } else {
         echo "
                     <script>
                         alert('cookbook gagal ditambahkan');
-                        document.location.href = 'buatcookbook.php';
+                        document.location.href = '';
                     </script>";
     }
 }
+function editcookbook($data)
+{
+
+    global $koneksi;
+    $nama_cookbook = $data['nama_cookbook'];
+    $excerpt = $data['deskripsi'];
+    $idcb = $data['idcb'];
+
+    $cookbook = "UPDATE cookbook set judul = '$nama_cookbook', excerpt = '$excerpt' where cookbook_id = $idcb";
+    // $tes = tampilkan("SELECT cookbook_id from cookbook order by cookbook_id desc")[0];
+    // $cek = $tes["cookbook_id"];
+    // var_dump($cek); die;
+
+    if ($koneksi->query($cookbook) === TRUE) {
+        echo "
+                    <script>
+                        alert('cookbook berhasil diedit');
+                        document.location.href = 'index.php?p=cookbook&idcb=$idcb';
+                    </script>";
+    } else {
+        echo "
+                    <script>
+                        alert('cookbook gagal diedit');
+                        document.location.href = '';
+                    </script>";
+    }
+}
+
 
 function langkah($data, $postid, $jenis)
 {
@@ -333,8 +742,6 @@ function langkah($data, $postid, $jenis)
     $jlh_langkah = count($data);
     $post_id = $postid;
     $jenis_post = $jenis;
-    // var_dump($data);
-    // die();
 
     if ($jenis_post == 1) {
         for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
@@ -347,11 +754,6 @@ function langkah($data, $postid, $jenis)
             } else {
                 mysqli_query($koneksi, "insert into langkah_resep(langkah, resep_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
             }
-
-            // if ($gambar == NULL) {
-            // }else{
-            //     mysqli_query($koneksi, "insert into langkah(langkah, jenis_post, post_id) values('$langkah', '$jenis_post', '$post_id')");
-            // }
         }
     } else {
         for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
@@ -363,11 +765,6 @@ function langkah($data, $postid, $jenis)
             } else {
                 mysqli_query($koneksi, "insert into langkah_tips(langkah, tips_id, gambar_langkah) values ('$langkah', '$post_id', '$gambar_langkah')");
             }
-
-            // if ($gambar == NULL) {
-            // }else{
-            //     mysqli_query($koneksi, "insert into langkah(langkah, jenis_post, post_id) values('$langkah', '$jenis_post', '$post_id')");
-            // }
         }
     }
 
@@ -419,7 +816,7 @@ function upload()
 function upload2($i)
 {
     echo "<pre>";
-    var_dump($_FILES);
+    // var_dump($_FILES);
     echo "</pre>";
     // die();
     $namafile = $_FILES['gambar_langkah']['name'][$i];
@@ -459,26 +856,6 @@ function upload2($i)
     return $namafilebaru;
 }
 
-function cookbook_cari()
-{
-
-    global $koneksi;
-    $term = $_GET["term"];
-
-    $query = "SELECT * FROM resep WHERE judul LIKE '%$term%'";
-    $result = $koneksi->query($query);
-
-    // Ubah hasil query menjadi array
-    $items = [];
-    while ($row = $result->fetch_assoc()) {
-        $items[] = $row;
-    }
-    var_dump($items);
-    die();
-
-    header('Content-Type: application/json');
-    echo json_encode($items);
-}
 
 function komentar_resep($data)
 {
@@ -492,6 +869,35 @@ function komentar_resep($data)
     $komentar = $data["komentar"];
     $resep_id = $data["resep_id"];
     $komen = "INSERT into komentar_resep(user_id, komentar, resep_id) values($id, '$komentar', $resep_id)";
+
+    if ($koneksi->query($komen) === TRUE) {
+        echo "
+                    <script>
+                        alert('komentar berhasil ditambahkan');
+                        document.location.href = '';
+                    </script>";
+    } else {
+        echo "
+                    <script>
+                        alert('komentar gagal ditambahkan');
+                        document.location.href = '';
+                    </script>";
+    }
+
+
+}
+function komentar_tips($data)
+{
+    global $koneksi;
+
+    // echo '<pre>';
+    // var_dump($data);
+    // echo '</pre>';
+    // die();
+    $id = $_SESSION["id_user"];
+    $komentar = $data["komentar"];
+    $tips_id = $data["tips_id"];
+    $komen = "INSERT into komentar_tips(user_id, komentar, tips_id) values($id, '$komentar', $tips_id)";
 
     if ($koneksi->query($komen) === TRUE) {
         echo "
@@ -549,7 +955,6 @@ function cek_bookmark($id)
 
 function bookmark($data)
 {
-
     // echo '<pre>';
     // var_dump($data);
     // echo '</pre>';
@@ -633,32 +1038,74 @@ function follow($data)
 
 }
 
-function caribahan($data)
+function cari($data)
 {
     global $koneksi;
 
-    if($data == 'ayam'){
-        $keyword = $data;
-    }else{
-        $keyword = $data["keyword"];
-    }
-    $hasil = tampilkan("SELECT resep.*, user.username, bahan_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id
+    $keyword = $data["keyword"];
+
+    $hasil1 = tampilkan("SELECT resep.*, user.username, bahan_resep.*, langkah_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id join langkah_resep on langkah_resep.resep_id = resep.resep_id
     where resep.judul LIKE '%$keyword%' 
     OR resep.excerpt LIKE '%$keyword%'
+    OR resep.asal_masakan LIKE '%$keyword%'
+    OR langkah_resep.langkah LIKE '%$keyword%'
     OR bahan_resep.bahan LIKE '%$keyword%' group by resep.resep_id");
+
+    // $hasil2 = tampilkan("SELECT tips.*, user.username, langkah_tips.* from tips join user on tips.user_id = user.user_id join langkah_tips on tips.tips_id = langkah_tips.tips_id
+    // where tips.judul LIKE '%$keyword%' 
+    // OR langkah_tips.langkah LIKE '%$keyword%' group by tips.tips_id");
+
+    $hasil3 = tampilkan("SELECT cookbook.*, user.username from cookbook join user on cookbook.user_id = user.user_id 
+    where cookbook.judul LIKE '%$keyword%'
+    OR cookbook.excerpt LIKE '%$keyword%' limit 4");
+
+    $hasil4 = tampilkan("SELECT * from user where username LIKE '%$keyword%' OR id_cookpad LIKE '%$keyword%'");
+
+    $hasil = array();
+    $hasil["resep"] = $hasil1;
+    // $hasil["tips"] = $hasil2;
+    $hasil["cookbook"] = $hasil3;
+    $hasil["user"] = $hasil4;
+    $hasil["keyword"] = $keyword;
+
+    echo "
+    <script>
+        document.location.href = 'index.php?p=hasil_cari';
+    </script>";
     // echo '<pre>';
     // var_dump($sql);
     // echo '</pre>';
     // die;
     return $hasil;
 }
+
+function caribahan($data)
+{
+    global $koneksi;
+
+    if ($data == 'ayam') {
+        $keyword = $data;
+    } else {
+        $keyword = $data["keyword"];
+    }
+    $hasil = tampilkan("SELECT resep.*, user.username, bahan_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id
+    where resep.judul LIKE '%$keyword%' 
+    OR resep.excerpt LIKE '%$keyword%'
+    OR bahan_resep.bahan LIKE '%$keyword%' group by resep.resep_id limit 4");
+    // echo '<pre>';
+    // var_dump($sql);
+    // echo '</pre>';
+    // die;
+    $hasil[0]["keyword"] = $keyword;
+    return $hasil;
+}
 function carialat($data)
 {
     global $koneksi;
 
-    if($data == 'teflon'){
+    if ($data == 'teflon') {
         $keyword = $data;
-    }else{
+    } else {
         $keyword = $data["keyword"];
     }
     $hasil = tampilkan("SELECT resep.*, user.username, langkah_resep.* from resep join user on resep.user_id = user.user_id join langkah_resep on resep.resep_id = langkah_resep.resep_id
@@ -671,6 +1118,171 @@ function carialat($data)
     // die;
     return $hasil;
 }
+
+function resepcookbook($data)
+{
+    // var_dump($data); die;
+    global $koneksi;
+    $rid = $data["resep_id"];
+    $cid = $data["cookbook_id"];
+
+    $sts = hitung("SELECT * from resep_cookbook where resep_id = $rid and cookbook_id = $cid");
+    if ($sts > 0) {
+        echo "
+        <script>
+            alert('resep sudah ada di dalam cookbook');
+            document.location.href = '';
+        </script>";
+
+    } else {
+
+        $query = mysqli_query($koneksi, "INSERT into resep_cookbook(cookbook_id, resep_id) values ($cid, $rid)");
+
+        if ($query === TRUE) {
+            echo "
+                    <script>
+                        alert('resep berhasil ditambahkan');
+                        document.location.href = '';
+                    </script>";
+        } else {
+            echo "
+                    <script>
+                        alert('resep gagal ditambahkan');
+                        document.location.href = '';
+                    </script>";
+        }
+
+    }
+
+}
+
+
+function editprofil($data)
+{
+    // var_dump($data);
+    // die;
+    global $koneksi;
+    $uid = $_SESSION["id_user"];
+    $username = $data['username'];
+    $email = $data['email'];
+    $asal = $data['asal'];
+    $deskripsi = $data['deskripsi'];
+    $id_cookpad = $data['id_cookpad'];
+
+    $tes = tampilkan("SELECT email, profil_image, id_cookpad from user where user_id = $uid")[0];
+    $email_lama = $tes["email"];
+    $gambar_lama = $tes["profil_image"];
+    $id_lama = $tes["id_cookpad"];
+
+    if ($_FILES['gambar']['error'] === 4) {
+        // var_dump($gambar_lama);
+        // die;
+        $gambar = $gambar_lama;
+    } else {
+        $gambar = upload();
+
+    }
+
+
+
+    if ($email == $email_lama) {
+        if ($id_cookpad == $id_lama) {
+            mysqli_query($koneksi, "UPDATE user set username = '$username', email = '$email', id_cookpad = '$id_cookpad', deskripsi = '$deskripsi', asal = '$asal', profil_image = '$gambar' where user_id = $uid ");
+            echo "
+                <script>
+                    alert('update Akun Berhasil');
+                    document.location.href = 'index.php?p=profil';
+                </script>";
+        } else {
+            $cek_id = mysqli_query($koneksi, "SELECT id_cookpad FROM user WHERE id_cookpad = '$id_cookpad'");
+            if (mysqli_num_rows($cek_id) > 0) {
+                echo "
+                <script>
+                    alert('id sudah digunakan');
+                    document.location.href = '';
+                </script>";
+            } else {
+                mysqli_query($koneksi, "UPDATE user set username = '$username', email = '$email', id_cookpad = '$id_cookpad', deskripsi = '$deskripsi', asal = '$asal', profil_image = '$gambar' where user_id = $uid ");
+                echo "
+                <script>
+                    alert('update Akun Berhasil');
+                    document.location.href = 'index.php?p=profil';
+                </script>";
+            }
+        }
+
+    } else {
+        if ($id_cookpad == $id_lama) {
+            $cekEmail = mysqli_query($koneksi, "SELECT email FROM user WHERE email = '$email'");
+            if (mysqli_num_rows($cekEmail) > 0) {
+                echo "
+                <script>
+                    alert('Email sudah digunakan');
+                    document.location.href = '';
+                </script>";
+            } else {
+                mysqli_query($koneksi, "UPDATE user set username = '$username', email = '$email', id_cookpad = '$id_cookpad', deskripsi = '$deskripsi', asal = '$asal', profil_image = '$gambar' where user_id = $uid ");
+                echo "
+                <script>
+                    alert('update Akun Berhasil');
+                    document.location.href = 'index.php?p=profil';
+                </script>";
+            }
+        } else {
+            $cek_id = mysqli_query($koneksi, "SELECT id_cookpad FROM user WHERE id_cookpad = '$id_cookpad'");
+            if (mysqli_num_rows($cek_id) > 0) {
+                echo "
+                <script>
+                    alert('id sudah digunakan');
+                    document.location.href = '';
+                </script>";
+            } else {
+                mysqli_query($koneksi, "UPDATE user set username = '$username', email = '$email', id_cookpad = '$id_cookpad', deskripsi = '$deskripsi', asal = '$asal', profil_image = '$gambar' where user_id = $uid ");
+                echo "
+                <script>
+                    alert('update Akun Berhasil');
+                    document.location.href = 'index.php?p=profil';
+                </script>";
+            }
+
+        }
+
+    }
+}
+
+
+function hapusresep($data)
+{
+    $id = $data["resep_id"];
+    global $koneksi;
+    if ($koneksi) {
+
+        $sql = "DELETE FROM resep WHERE resep_id = $id";
+        mysqli_query($koneksi, $sql);
+        echo "<script> alert ('resep berhasil dihapus');</script>";
+        echo "<script>window.location.href = 'index.php?p=profil';</script>";
+    } else if ($koneksi->connect_error) {
+        echo "<script> alert ('resep gagal dihapus');</script>";
+        echo "<script>window.location.href = '';</script>";
+    }
+}
+function hapustips($data)
+{
+    $id = $data["tips_id"];
+    global $koneksi;
+    if ($koneksi) {
+
+        $sql = "DELETE FROM tips WHERE tips_id = $id";
+        mysqli_query($koneksi, $sql);
+        echo "<script> alert ('tips berhasil dihapus');</script>";
+        echo "<script>window.location.href = 'index.php?p=profil';</script>";
+    } else if ($koneksi->connect_error) {
+        echo "<script> alert ('tips gagal dihapus');</script>";
+        echo "<script>window.location.href = '';</script>";
+    }
+}
+
+
 
 
 

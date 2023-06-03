@@ -1,205 +1,104 @@
-    <!-- Body Starts -->
+<?php
+$idbp = $_GET["idbp"];
+$bahan = tampilkan("SELECT * from bahan_pilihan where bp_id = $idbp")[0];
+$bahanuy = $bahan["bahan"];
+// $temp = cari($bahanuy);
+$resep = tampilkan("SELECT resep.*, user.username, bahan_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id
+where resep.judul LIKE '%$bahanuy%' 
+OR resep.excerpt LIKE '%$bahanuy%'
+OR bahan_resep.bahan LIKE '%$bahanuy%' group by resep.resep_id");
+?>
 
-      <div style="background-color: #f8f6f2;">
-        <div class="container">
-            
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    <!-- konten start -->
-                    <div class="card">
-                        <!-- Gambar bahan -->
-                        <img src="asset/img/ban1.jpg" alt="">
+<!-- Body Starts -->
 
-                        <div class="card-body">
-                            <!-- nama bahan -->
-                            <h3>Yogurt</h3>
-                            <small>Tersedia : Sepanjang Tahun</small>
-                            <br>
+<div style="background-color: #f8f6f2;">
+  <div class="container">
 
-                            <!-- Deskripsi Bahan -->
-                            <p>
-                                Yogurt adalah produk susu yang difermentasi dan sangat populer di seluruh dunia. Saat memilih yogurt, pastikan untuk memilih yang rendah lemak, rendah gula, dan mengandung probiotik untuk mendapatkan manfaat kesehatan yang maksimal. Yogurt dapat disimpan di dalam kulkas dan harus dikonsumsi sebelum tanggal kedaluwarsa.
-                              </p>
-                              
-                              <p class="read-more-content">
-                                Ada banyak cara untuk mengolah yogurt, mulai dari menambahkan buah-buahan hingga digunakan sebagai bahan dalam saus dan salad. Yogurt dikenal memiliki berbagai manfaat untuk kesehatan, termasuk membantu meningkatkan pencernaan dan meningkatkan sistem kekebalan tubuh. Foto oleh @cicilejang
-                              </p>
-                              
-                              <button class="btn text-cookpad" onclick="toggleReadMore()">Selengkapnya</button>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <!-- konten start -->
+        <div class="card">
+          <!-- Gambar bahan -->
+          <!-- <img src="asset/img/ban1.jpg" alt=""> -->
 
-                              <br> <br>
+          <div class="card-body">
+            <!-- nama bahan -->
+            <h3>
+              <?= $bahan["bahan"] ?>
+            </h3>
+            <br>
 
-                              <!-- resep -->
-                              <!-- resep -->
-                              <h3>Resep</h3>
-                              <div class="row row-cols-3 g-3">
-                                <div class="col">
-                                    
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/ayam.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
+            <!-- Deskripsi Bahan -->
+            <p>
+              <?= $bahan["deskripsi"] ?>
+            </p>
 
-                                </div>
+            <br> <br>
 
-                                <div class="col">
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/ayam.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
-                                </div>
+            <!-- resep -->
+            <!-- resep -->
+            <h3>Resep</h3>
+            <div class="row row-cols-3 g-3">
 
-                                <div class="col">
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/ayam.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
-                                </div>
-
-                                <div class="col">
-                                    
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/donat.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
-
-                                </div>
-
-                                <div class="col">
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/donat.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
-                                </div>
-
-                                <div class="col">
-                                    <div>
-                                        <p>user_name_account</p>
-                                      </div>
-                                      <div class="card">
-                                        <img class="card-img" src="asset/img/donat.jpeg" alt="...">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Nama Makanan</h5>
-                                          <p>Deskripsi Makanan</p>
-                                          <small class="card-text">Reaksi</small>
-                                        </div>
-                                      </div>
-                                </div>
-
-                              </div>
-                              <br>
-                              <!-- button -->
-                              <!-- button -->
-                              <!-- button -->
-
-                              <button class="btn btn-secondary" style="width: 100%;"><b>Cari Lebih Banyak Resep</b></button>
-                              
-                              <!-- rekomendasi bahan lain -->
-                              <!-- rekomendasi bahan lain -->
-                              <!-- rekomendasi bahan lain -->
-                              <br><br>
-                              <div class="row row-cols-1 row-cols-md-4 g-3">
-                                <div class="col">
-                                  <div class="card">
-                                    <a href=""><img src="asset/img/donat.jpeg" class="card-img-top" alt="...">
-                                    <div class="img-caption">
-                                      <p class="text-white"><b>Bahan Pilihan 1</b></p>
-                                  </div>
-                                    </a>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="card">
-                                    <a href=""><img src="asset/img/bekal.jpeg" class="card-img-top" alt="...">
-                                      <div class="img-caption">
-                                        <p class="text-white"><b>Bahan Pilihan 2</b></p>
-                                    </div>
-                                    </a>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="card">
-                                    <a href=""><img src="asset/img/ayam.jpeg" class="card-img-top" alt="...">
-                                      <div class="img-caption">
-                                        <p class="text-white"><b>Bahan Pilihan 3</b></p>
-                                    </div>
-                                  </a>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="card">
-                                    <a href=""><img src="asset/img/kue.jpeg" class="card-img-top" alt="...">
-                                      <div class="img-caption">
-                                        <p class="text-white"><b>Bahan Pilihan 4</b></p>
-                                    </div>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-
-                        </div>
+              <?php foreach ($resep as $resep): ?>
+                <a href="index.php?p=detail_resep&idr=<?= $resep["resep_id"] ?>" class=" text-decoration-none text-dark ">
+                  <div class="col">
+                    <div>
+                      <p>
+                        <?= $resep["username"] ?>
+                      </p>
                     </div>
-                    <!-- konten end -->
-                </div>
-                <div class="col-2"></div>
+                    <div class="card">
+                      <img class="card-img" src="gambar/<?= $resep["image"] ?>" style="height: 250px; width: 262px;"
+                        alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <?= $resep["judul"] ?>
+                        </h5>
+                        <p>
+                          <?= $resep["excerpt"] ?>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <?php endforeach ?>
+
             </div>
+            <br>
+            <!-- button -->
 
-        </div>
-        <br>
-        </div>
 
-    <!-- Body End -->
-   
-    
-    
+            <!-- rekomendasi bahan lain -->
+
+          </div>
+        </div>
+        <!-- konten end -->
+      </div>
+      <div class="col-2"></div>
+    </div>
+
+  </div>
+  <br>
+</div>
+
+<!-- Body End -->
+
+
+
 <!-- Script Bootstrap -->
 <script>
-    function toggleReadMore() {
-      var content = document.querySelector('.read-more-content');
-      var button = document.querySelector('button');
-      
-      if (content.style.display === 'none') {
-        content.style.display = 'block';
-        button.textContent = 'Sembunyikan';
-      } else {
-        content.style.display = 'none';
-        button.textContent = 'Selengkapnya';
-      }
+  function toggleReadMore() {
+    var content = document.querySelector('.read-more-content');
+    var button = document.querySelector('button');
+
+    if (content.style.display === 'none') {
+      content.style.display = 'block';
+      button.textContent = 'Sembunyikan';
+    } else {
+      content.style.display = 'none';
+      button.textContent = 'Selengkapnya';
     }
-  </script>
+  }
+</script>

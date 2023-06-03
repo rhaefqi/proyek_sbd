@@ -1,48 +1,56 @@
 <?php
-require_once "../function.php";
-if (isset($_POST["submit"])) {
+  require_once "function.php";
+
+  if (isset($_POST["buat_cookbook"])) {
     tambahcookbook($_POST);
-}
-var_dump($_SESSION)
-    ?>
-<!DOCTYPE html>
-<html lang="en">
+  }
+?>
+<!-- Body Starts -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<div style="background-color: #f8f6f2;">
+  <div class="container">
+    <br>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8 card">
+        <div class="card-body">
+          <br>
+          <div class="text-center">
+            <img src="../asset/img/buat.svg" alt="" width="30%">
+            <br><br>
+            <h4><b>Tulis Catatan Masakmu</b></h4>
+            <p>Bantu pengguna lain mendapatkan ide memasak</p>
+            <br><br>
+          </div>
 
-    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../asset/css/tambahan.css">
-    <link rel="stylesheet" href="../asset/icon/css/font-awesome.min.css" />
-</head>
+          <form action="" method="post">
+            <!-- publik or privat -->
+            <!-- nama cookbook -->
+            <label for="namacookbook" style="font-size: 20px; font-weight: bold;">Nama Cookbook</label>
+            <input id="namacookbook" class="form-control" type="text" placeholder="Inspirasi Bekal Anak" name="nama_cookbook">
+            <br>
 
-<body>
-    <div class="container mt-5">
-        <form class="mb-3" method="POST" enctype="multipart/form-data">
-            <h1>Buat Cookbook</h1>
-            <hr>
-            <div class="form-group">
-                <label for="nama_cookbook">Nama cookbook</label>
-                <input type="text" class="form-control" id="nama_cookbook" name="nama_cookbook"
-                    placeholder="Masukan Nama Cookbook">
+            <!-- deskripsi cookbook -->
+            <label for="desccookbook" style="font-size: 20px; font-weight: bold;">Deskripsi</label>
+            <textarea class="form-control" name="deskripsi" id="desccookbook" rows="10"
+              placeholder="Apa isi cookbook ini? "></textarea>
+            <br>
+
+            <div class="d-flex justify-content-center">
+              <button type="submit" name="buat_cookbook" class="btn btn-cookpad text-center"
+                style="width: 200px;"><b>Buat Cookbook!</b></button>
             </div>
-            <div class="form-group mb-2">
-                <label for="deskripsi">Deskripsi Cookbook</label>
-                <input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Tuliskan deskripsi" >
-            </div>
+          </form>
+          <br>
+        </div>
 
-            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-            <a href="buat.php" class="btn btn-warning">kembali</a>
-        </form>
+      </div>
+
+      <div class="col-2"></div>
+
     </div>
+  </div>
+  <br><br>
+</div>
 
-
-    <script src="../asset/js/bootstrap.bundle.min.js"></script>
-    <script src="../asset/js/bootstrap.min.js"></script>
-    <script src="../asset/js/jquery.js"></script>
-</body>
-
-</html>
+<!-- Body End -->
