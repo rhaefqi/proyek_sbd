@@ -498,10 +498,10 @@ if (isset($_POST["cari"])) {
               <?php foreach ($bahanp as $bahanp): ?>
                 <div class="col">
                   <div class="card">
-                    <a href="?p=bahan_pilihan&idbp=<?= $bahanp["bp_id"] ?>"><img src="asset/img/santan.jpg"
+                    <a href="?p=bahan_pilihan&idbp=<?= $bahanp["bp_id"] ?>"><img src="gambar/<?= $bahanp["bp_image"] ?>"
                         class="card-img-top" alt="..." height="150">
                       <div class="img-caption">
-                        <h5 class="text-white"><b>Santan</b></h5>
+                        <h5 class="text-white"><b><?= $bahanp["bahan"] ?></b></h5>
                       </div>
                     </a>
                   </div>
