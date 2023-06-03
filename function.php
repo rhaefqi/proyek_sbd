@@ -40,6 +40,7 @@ function register($data)
     $Confirm_Password = $data['Confirm_Password'];
 
     $cekEmail = mysqli_query($koneksi, "SELECT email FROM user WHERE email='$Email'");
+    $pass = password_hash($Password, PASSWORD_DEFAULT);
 
     if (mysqli_num_rows($cekEmail) > 0) {
         echo "
@@ -62,7 +63,7 @@ function register($data)
              document.location.href = 'signup.php';
          </script> ";
     } else {
-        mysqli_query($koneksi, "INSERT INTO user (username, email, password) VALUES ('$Name', '$Email', '$Password')");
+        mysqli_query($koneksi, "INSERT INTO user (username, email, password) VALUES ('$Name', '$Email', '$pass')");
         echo "
     <script>
         alert('Registrasi Akun Berhasil');
@@ -81,10 +82,10 @@ function login($data)
     $email_login = $data["Email"];
     $pass_login = $data["Password"];
 
-    $sql = "SELECT * FROM user WHERE (email = '{$email_login}') AND password = '{$pass_login}'";
+    $sql = "SELECT * FROM user WHERE (email = '{$email_login}')";
     $query = mysqli_query($koneksi, $sql);
 
-    $adminsql = "SELECT * FROM admin WHERE (email = '{$email_login}') AND password = '{$pass_login}'";
+    $adminsql = "SELECT * FROM admin WHERE (email = '{$email_login}')";
     $adminquery = mysqli_query($koneksi, $adminsql);
 
 
@@ -106,7 +107,7 @@ function login($data)
         $id_user = $row['user_id'];
         $id_cookpad = $row['id_cookpad'];
     }
-    if (($email_login == $email) && $pass_login == $pass) {
+    if (($email_login == $email) && password_verify($pass_login, $pass)) {
         echo
             "<script>
                     alert('Selamat kamu telah login');
@@ -125,7 +126,7 @@ function login($data)
         $pass = $row['password'];
         $admin_id = $row['admin_id'];
     }
-    if (($email_login == $email) && $pass_login == $pass) {
+    if (($email_login == $email) && password_verify($pass_login, $pass)) {
         echo
             "<script>
                         alert('Selamat kamu telah login sebagai admin');
@@ -301,10 +302,11 @@ function tambahBahanPilihan($data)
     global $koneksi;
     $deskripsi = $data['deskripsi'];
     $bahan = $data['bahan'];
+    $admin_id = $_SESSION["admin_id"];
     $bp_image = upload();
 
     if ($deskripsi && $bp_image) {
-        $query = "INSERT INTO bahan_pilihan (deskripsi, bp_image, bahan) VALUES ('$deskripsi', '$bp_image', '$bahan')";
+        $query = "INSERT INTO bahan_pilihan (deskripsi, bp_image, bahan, admin_id) VALUES ('$deskripsi', '$bp_image', '$bahan', $admin_id)";
         if ($koneksi->query($query) === TRUE) {
             echo "
             <script>
