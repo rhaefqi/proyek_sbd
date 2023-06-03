@@ -1,5 +1,7 @@
 <?php
 require_once("function.php");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,25 +18,27 @@ require_once("function.php");
 
 
   <link rel="icon" href="">
-  <title>Tubes SBD</title>
+  <title>Cookpad</title>
 </head>
 
 <body>
 
   <?php
-    // navbar
-    include "includes/navbar.php";
-    // body
-    include "main.php";
-    // footer
-    include "includes/footer.php";
+  
+  // navbar
+  include "includes/navbar.php";
+  // body
+  include "main.php";
+  // footer
+  include "includes/footer.php";
   ?>
 
 
   <!-- Script Bootstrap -->
   <script src="asset/js/bootstrap.bundle.min.js"></script>
-  <script src="asset/js/bootstrap.min.js"></script>
+  <!-- <script src="asset/js/bootstrap.min.js"></script> -->
   <script src="asset/js/jquery.js"></script>
+  <script src="asset/js/script.js"></script>
 </body>
 
 </html>

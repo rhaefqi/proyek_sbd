@@ -37,21 +37,20 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
           </p>
         </div>
         <div class="d-flex mb-3">
-          <img style="width: 40px;height: 40px;" class="rounded-circle" <?php
-          $g = $resep['profil_image'];
-          $gambar = "gambar/$g";
-          // var_dump($gambar);
-          if (empty($g) || !file_exists($gambar)) { ?>
-              src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $komentar["profil_image"] ?>" <?php } ?>
-            alt="pembuat  ">
+          <img style="width: 40px;height: 40px;" class="rounded-circle" <?php if (empty($resep["profil_image"])) { ?>
+              src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $resep['profil_image'] ?>" <?php } ?>
+            width="100%">
           <span class="d-flex ms-2 mt-1 fw-bold">
             <p>
               <?= $resep["username"] ?>
+            </p>
             <p class="fw-normal ms-1">@
               <?= $resep["id_cookpad"] ?>
             </p>
-            </p>
-          </span>
+          </span><br>
+        </div>
+        <div>
+          <?= $resep["excerpt"] ?>
         </div>
       </div>
       <!-- Akhir Nama Makanan Dan Pembuat -->
@@ -68,7 +67,6 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
               stroke-width="1.3"></circle>
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
               d="M8 5.333V8l2 1.334"></path>
-          </svg>
           </svg>
           <div class="p-0 me-3">
             <p>
@@ -122,6 +120,17 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
             </p>
           </div>
           <div class="word-wrap">
+            <?php
+            $g = $langkah['gambar_langkah'];
+            $gambar = "gambar/$g";
+            ?>
+            <?php if (empty($g) || !file_exists($gambar)) { ?>
+
+            <?php } else { ?>
+              <img src="gambar/<?= $langkah["gambar_langkah"] ?>" alt="tes" title="tes"
+                style="width: 120px; height: 120px;">
+            <?php } ?>
+
             <p>
               <?= $langkah["langkah"] ?>
             </p>
@@ -270,17 +279,18 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
           </div>
 
         <?php } ?>
+        <?php
+        $uid = $_SESSION["id_user"];
+        $user = tampilkan("SELECT * from user where user_id = $uid")[0];
+        ?>
 
         <div class="d-flex mb-3">
           <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
-            <img class="w-100 h-100" <?php
-            $g = $resep['profil_image'];
-            $gambar = "gambar/$g";
-            // var_dump($gambar);
-            if (empty($g) || !file_exists($gambar)) { ?> src="asset/img/profil.png" <?php } else { ?>
-                src="gambar/<?= $komentar["profil_image"] ?>" <?php } ?> alt="pengomen">
+            <img class="w-100 h-100 rounded-circle" <?php if (empty($user["profil_image"])) { ?>
+                src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $user['profil_image'] ?>" <?php } ?>>
           </div>
           <div class="comment-box border rounded-pill flex-grow-1 ms-2">
+
             <form action="" method="post">
               <div class="comment-input d-flex">
                 <input type="hidden" name="resep_id" value="<?= $resep["resep_id"] ?>">
@@ -295,6 +305,7 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
                 </button>
               </div>
             </form>
+
           </div>
         </div>
       </div>
@@ -308,13 +319,7 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
         <div class="d-flex mb-3">
           <div class="me-2 mt-2">
             <a href="">
-              <img style="width: 96px; height: 96px;" class="rounded-circle" <?php
-              $g = $resep['profil_image'];
-              $gambar = "gambar/$g";
-              // var_dump($gambar);
-              if (empty($g) || !file_exists($gambar)) { ?>
-                  src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $komentar["profil_image"] ?>" <?php } ?>
-                alt="pembuat">
+              <img style="width: 96px; height: 96px;" class="rounded-circle" <?php if (empty($resep["profil_image"])) { ?> src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $resep['profil_image'] ?>" <?php } ?>>
             </a>
           </div>
           <div>
@@ -337,8 +342,7 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
               </p>
             </div>
             <div class="ms-2">
-              <a href="https://www.example.com" class="btn btn-secondary btn-sm mb-1"
-                style="width: auto; height: auto">Ikuti</a>
+
             </div>
           </div>
         </div>
@@ -397,24 +401,34 @@ $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user
           <?php }
           ?>
         </div>
-        <div class="mb-1">
-          <a href="https://www.example.com" class="btn btn-white border  text-dark fw-bold border btn-md mb-1"
-            style="width: 100%;">Bagikan</a>
-        </div>
-        <div class="mb-1">
-          <a href="https://www.example.com" class="btn btn-white border  text-dark fw-bold border btn-md mb-1"
-            style="width: 100%;">Print</a>
-        </div>
+        <?php
+        if (isset($_POST['hapus_resep'])) {
+
+          hapusresep($_POST);
+          //insiasi variabel untuk menampung isian id
+          // $id = $_POST['resep_id'];
+        }
+        ?>
+        <?php
+        if ($_SESSION["id_user"] == $resep["user_id"]) { ?>
+          <div class="mb-1">
+            <a href="index.php?p=edit_resep&idr=<?= $resep["resep_id"] ?>"
+              class="btn btn-white border  text-dark fw-bold border btn-md mb-1" style="width: 100%;">edit resep</a>
+          </div>
+          <div class="mb-1">
+            <form action="" onsubmit="return confirm('anda yakin mau menghapus resep?');" method="post">
+              <input type="hidden" name="resep_id" value="<?= $resep["resep_id"] ?>">
+              <button name="hapus_resep" class="btn btn-white border  text-dark fw-bold border btn-md mb-1" style="width: 100%;">Hapus
+                resep</button>
+            </form>
+          </div>
+        <?php } ?>
         <div class="d-flex mb-1">
           <a href="#cooksnap-section" class="btn btn-white border  text-dark fw-bold border btn-md mb-1"
             style="width: 83%;">Kirim Foto Cooksnap</a>
           <div class="ms-3">
-            <a href="https://www.example.com" class="btn btn-white border  text-dark fw-bold border btn-md mb-1"
-              style="width: auto;">...</a>
+            <a href="" class="btn btn-white border  text-dark fw-bold border btn-md mb-1" style="width: auto;">...</a>
           </div>
-        </div>
-        <div class="text-center mb-3">
-          <a class="text-reset" href="">Selengkapnya Mengenai Cooksnap</a>
         </div>
       </div>
     </div>

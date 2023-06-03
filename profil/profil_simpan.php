@@ -1,68 +1,95 @@
+<?php
+require_once "function.php";
+
+$uid = $_SESSION["id_user"];
+$simpan = tampilkan("SELECT bookmark.*,resep.*,user.username,user.profil_image from bookmark join resep on bookmark.resep_id = resep.resep_id join user on resep.user_id = user.user_id where bookmark.user_id = $uid ");
+// var_dump($simpan);
+$hitung = count($simpan);
+// $user = tampilkan("SELECT * from user where user_id = $uid")[0];
+?>
+
 <div>
     <div class="row">
         <div class="col">
-            <p><b>Jumlah Resep Yang Disimpann</b></p>
-        </div>
-        <div class="col-4">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Cari Resep" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">Cari</button>
-            </form>
+            <p><b>Jumlah Resep Yang Disimpan
+                    <?= $hitung ?>
+                </b></p>
         </div>
     </div>
 
     <hr>
+    <?php foreach ($simpan as $simpan): ?>
 
-    <div class="row">
-        <div class="col-9">
+        <a href="index.php?p=detail_resep&idr=<?= $simpan["resep_id"] ?>" class="text-decoration-none text-dark">
             <div class="row">
-                <div class="col-10">
-                    <p>
-                        <img src="asset/img/profil.png" alt="" width="5%" class="rounded-circle"> &nbsp;
-                        <b>Nama User</b>
-                    </p>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-10">
+                            <p>
+                                <img alt="profil" class="rounded-circle" <?php if (empty($simpan["profil_image"])) { ?>
+                                        src="asset/img/profil.png" <?php } else { ?> src="gambar/<?= $simpan['profil_image'] ?>"
+                                    <?php } ?> style="width: 30px; height: 30px;">
+                                    &nbsp;
+                                <b>
+                                    <?= $simpan["username"] ?>
+                                </b>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3><b>
+                                <?= $simpan["judul"] ?>
+                            </b>
+                        </h3>
+                        <?php
+                        $id = $simpan["resep_id"];
+                        $bahan = tampilkan("SELECT bahan from bahan_resep where resep_id = $id");
+                        // echo '<pre>';
+                        // var_dump($bahan);
+                        // echo '</pre>';
+                        ?>
+                        <p>
+                            <?php
+                            foreach ($bahan as $bahan) {
+                                echo $bahan["bahan"];
+                                echo " • ";
+                            }
+                            ?>
+                        </p>
+
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"
+                                class="mise-icon mise-icon-time">
+                                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.3"></circle>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.3" d="M8 5.333V8l2 1.334"></path>
+                            </svg>
+                            <?= $simpan["lama_memasak"] ?> &nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"
+                                class="mise-icon mise-icon-user">
+                                <circle cx="8" cy="4.667" r="2.667" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.3"></circle>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.3"
+                                    d="M10 9.333H6A2.667 2.667 0 0 0 3.333 12c0 .736.597 1.333 1.334 1.333h6.666c.737 0 1.334-.597 1.334-1.333A2.667 2.667 0 0 0 10 9.333Z">
+                                </path>
+                            </svg>
+                            <?= $simpan["porsi"] ?> orang
+                        </p>
+                    </div>
+
                 </div>
-                <div class="col-2">
-                    <p>
-                        <a href=""><img width="20%" src="asset/img/cooksnap.png" alt=""></a> &nbsp;
-                        <a href=""><img width="20%" src="asset/img/bookmark.png" alt=""></a>
-                    </p>
+                <div class="col-3">
+                    <img src="gambar/<?= $simpan["image"] ?>" alt="" width="90%">
                 </div>
             </div>
+        </a>
+        <hr>
 
-            <div>
-                <h3><b>Judul Masakan</b></h3>
+    <?php endforeach ?>
 
-                <p>Bahan- Bahan Masakan</p>
-                <p>
-                    <img width="3%" src="asset/img/cooksnap.png" alt="">&nbsp; Lama Waktu Memasak &nbsp; &nbsp;
-                    <img width="3%" src="asset/img/bookmark.png" alt="">&nbsp;Jumlah Porsi
-                </p>
-            </div>
-
-        </div>
-        <div class="col-3">
-            <img src="asset/img/ayam.jpeg" alt="" width="90%">
-        </div>
-    </div>
 </div>
 
 <br>
-<div>
-    <div class="card">
-        <br>
-        <h5 class="text-center"><b>1/60 resep yang dapat disimpan</b></h5>
-        <div class="col p-3">
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 3%" aria-valuenow="25" aria-valuemin="0"
-                    aria-valuemax="100">
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-cookpad" type="button"><b>Simpan resep tanpa batas</b></button>
-        </div>
-        <br>
-    </div>
-</div>

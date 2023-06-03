@@ -1,6 +1,6 @@
 <?php
     require_once "function.php";
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["tambah_resep"])) {
         tambahresep($_POST);
     }
     // var_dump($_SESSION)
@@ -172,36 +172,12 @@
             </div>
             <br>
             <!-- Label start -->
-            <div class="card">
-              <div class="card-body">
-                <h2><b>Tambahkan Label</b></h2>
-                <br>
-                <div class="btn-sm" role="" aria-label="Basic checkbox toggle button group">
-                  <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck1">Sarapan</label>
-
-                  <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck2">Makan Siang</label>
-
-                  <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck3">Makan Malam</label>
-
-                  <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck4">Cemilan</label>
-
-                  <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck5">Hidangan Utama</label>
-
-                  <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
-                  <label class="btn btn-light btn-sm" for="btncheck6">Hidangan Penutup</label>
-                </div>
-              </div>
-            </div>
+            
             <!-- Label end -->
             <br>
             <center>
               <a href="index.php?p=buat" class="btn btn-secondary">Kembali</a>
-              <button class="btn btn-cookpad" type="submit" name="submit">Terbitkan</button>
+              <button class="btn btn-cookpad" type="submit" name="tambah_resep">Terbitkan</button>
             </center>
 
           </div>

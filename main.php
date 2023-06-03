@@ -8,7 +8,7 @@ if (@$_GET) {
             include "buat/buat.php";
         break;
         case "cookbook":
-            include "buat/cookbook.php";
+            include "page/cookbook.php";
         break;
         case "user_cookbook":
             include "profil/cookbook_user.php";
@@ -19,8 +19,20 @@ if (@$_GET) {
         case "buat_tips":
             include "buat/buattips.php";
         break;
+        case "buat_cookbook":
+            include "buat/buatcookbook.php";
+        break;
+        case "edit_cookbook":
+            include "buat/editcookbook.php";
+        break;
+        case "edit_tips":
+            include "buat/edittips.php";
+        break;
+        case "edit_resep":
+            include "buat/editresep.php";
+        break;
         case "aktivitas":
-            include "aktivitas.php";
+            include "aktivitas_user.php";
         break;
         case "edit":
             include "profil/editprofil.php";
@@ -34,8 +46,14 @@ if (@$_GET) {
         case "detail_resep":
             include "page/detail_resep.php";
         break;
+        case "detail_tips":
+            include "page/detail_tips.php";
+        break;
         case "detail_profil":
             include "profil/anotherprofil.php";
+        break;
+        case "hasil_cari":
+            include "hasil_cari.php";
         break;
     }
 } elseif (empty($_SESSION["id_user"])) {

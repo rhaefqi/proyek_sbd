@@ -1,0 +1,84 @@
+body {
+    background-color: #ffffff !important;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #FFA347;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .custom-file-upload:hover {
+    background-color: #ff7700;
+  }
+
+  /* Optional: Styling the file name */
+  .custom-file-label {
+    margin-left: 10px;
+    font-weight: bold;
+  }
+
+    /* Hidden input file */
+    .file-input {
+        display: none;
+      }
+
+
+      .tambah {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #FFA347;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        transition: background-color 0.3s ease;
+      }
+    
+      .tambah:hover {
+        background-color: #ff7700;
+      }
+
+      /* tbody {
+        color: #ff7700 !important;
+        border: rgb(0, 0, 0) !important;
+      }
+
+      tfoot{
+        color: #ff7700 !important;
+        border: black !important;
+      }
+
+      thead {
+        color: #ff7700 !important;
+        border: black !important;
+      } */
+
+
+      table.table-bordered {
+        border-collapse: collapse;
+      }
+    
+      table.table-bordered th,
+      table.table-bordered td {
+      border: 1px solid #FFA347;
+      color: #FFA347;
+        
+      }
+
+      .update {
+        border: 2px solid #FFA347 !important;
+        margin-top: 8px;
+        color: #999;
+      }
+
+      .warna {
+        color: #FFA347;
+      }
+
+      
