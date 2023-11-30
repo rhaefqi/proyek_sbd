@@ -161,9 +161,7 @@
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Name</th>
                                             <th>Email</th>
-                                            <th>Password</th>
                                             <th>Asal</th>
                                             <th>Deskripsi</th>
                                             <th>Profil_Image</th>
@@ -175,9 +173,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Name</th>
                                             <th>Email</th>
-                                            <th>Password</th>
                                             <th>Asal</th>
                                             <th>Deskripsi</th>
                                             <th>Profil_Image</th>
@@ -199,15 +195,9 @@
                                     <label for="Username"></label>
                                     <td><input class="update" type="text" name="Username" id="Username" value='. $data["username"] .'></td>
 
-                                    <label for="Name"></label>
-                                    <td><input class="update" type="text" name="Name" id="Name" value='. $data["name"] .'></td>
-
                                     <label for="Email"></label>
                                     <td><input class="update" type="text" name="Email" id="Email" value='. $data["email"] .'></td>
-
-                                    <label for="Password"></label>
-                                    <td><input class="update" type="text" name="Password" id="Password" value='. $data["password"] .'></td>
-                                                                            
+                                        
                                     <label for="Asal"></label>
                                     <td><input class="update" type="text" name="Asal" id="Asal" value='. $data["asal"] .'></td>
 

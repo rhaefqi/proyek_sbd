@@ -59,19 +59,15 @@ $resep = tampilkan("SELECT * from resep where user_id = $id limit 3");
                                 <div class="card">
                                     <div class="row">
                                         <div class="col-4 d-flex align-items-center">
-                                            <img class="card-img" src="asset/img/logo.png" alt="..." width="100%">
+                                            <img class="card-img" src="gambar/<?= $cooksnap["cooksnap_image"] ?>" alt="..." width="100%">
                                         </div>
                                         <div class="col-8">
                                             <p class="text-sm">
                                                 <?= $cooksnap["komentar"] ?>
                                             </p>
-                                            <p><a href="#" class="btn btn-sm">berikan komentar</a></p>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <h5>Nama Makanan 1</h5>
-                                        <p>user_name</p>
-                                        <p class="text-sm">Reaksi</p>
                                     </div>
                                 </div>
                             </div>
@@ -127,13 +123,10 @@ $resep = tampilkan("SELECT * from resep where user_id = $id limit 3");
                                                 <p class="text-sm">
                                                     <?= $cooksnap2["komentar"] ?>
                                                 </p>
-                                                <p><a href="#" class="btn btn-sm">berikan komentar</a></p>
+                                                <p><a href="#" class="btn btn-sm"><?= $cooksnap2["komentar"] ?></a></p>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h5>Nama Makanan 7</h5>
-                                            <p>user_name</p>
-                                            <p class="text-sm">Reaksi</p>
                                         </div>
                                     </div>
                                 </div>

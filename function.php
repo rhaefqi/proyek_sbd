@@ -88,13 +88,10 @@ function login($data)
     $adminsql = "SELECT * FROM admin WHERE (email = '{$email_login}')";
     $adminquery = mysqli_query($koneksi, $adminsql);
 
-
     if (!$query) {
         die("Query gagal" . mysqli_error($koneksi));
     }
-
     $email = null;
-
     //user
     while ($row = mysqli_fetch_array($query)) {
         // echo "<pre>";
@@ -201,9 +198,9 @@ function update($data)
     global $koneksi;
     $user_id = $data["user_id"];
     $username = $data["Username"];
-    $name = $data["Name"];
+    // $name = $data["Name"];
     $email = $data["Email"];
-    $password = $data["Password"];
+    // $password = $data["Password"];
     $asal = $data["Asal"];
     $deskripsi = $data["Deskripsi"];
     $profil_image = $data["Profil_Image"];
@@ -214,7 +211,7 @@ function update($data)
     $dataChanged = false; // Flag untuk menandakan apakah ada perubahan data
 
     // Memeriksa apakah ada perubahan data
-    if ($oldData['username'] !== $username || $oldData['name'] !== $name || $oldData['email'] !== $email || $oldData['password'] !== $password || $oldData['asal'] !== $asal || $oldData['deskripsi'] !== $deskripsi || $oldData['profil_image'] !== $profil_image) {
+    if ($oldData['username'] !== $username  || $oldData['email'] !== $email || $oldData['asal'] !== $asal || $oldData['deskripsi'] !== $deskripsi || $oldData['profil_image'] !== $profil_image) {
         $dataChanged = true;
     }
 
@@ -222,9 +219,7 @@ function update($data)
         $sql = "UPDATE user
         SET 
         username = '$username',
-        name = '$name',
         email = '$email',
-        password = '$password',
         asal = '$asal',
         deskripsi = '$deskripsi',
         profil_image = '$profil_image'
@@ -364,11 +359,6 @@ function aktivitas($data)
 
 function tambahresep($data)
 {
-    echo "<pre>";
-    // var_dump($data);
-    // var_dump($_FILES);
-    echo "</pre>";
-    //  die();
     global $koneksi;
     $username = $_SESSION['username'];
     $user = "SELECT * FROM user WHERE username = '$username' ";
@@ -383,10 +373,6 @@ function tambahresep($data)
     $lamaMemasak = $data['lamaMemasak'];
     $langkah = $data['langkah'];
     $bahan = $data['bahan'];
-    // langkah($data['bahan'], 1, 1);
-    // bahanresep($bahan, 1);
-
-    // langkah($data['langkah']);
     $gambar = upload();
 
     if (!$gambar) {
@@ -403,7 +389,6 @@ function tambahresep($data)
         while ($isi = mysqli_fetch_array($hasil_post)) {
             $post_id = $isi['resep_id'];
         }
-
         langkah($langkah, $post_id, 1); //, $data['gambar']
         bahanresep($bahan, $post_id);
         echo "
@@ -418,16 +403,10 @@ function tambahresep($data)
                         document.location.href = 'buatresep.php';
                     </script>";
     }
-    // print_r($data);
-
 }
 
 function editresep($data)
 {
-    // echo"<pre>";
-    // var_dump($data);
-    // echo"</pre>";
-    // die;
 
     global $koneksi;
     $id_user = $_SESSION['id_user'];
@@ -441,11 +420,7 @@ function editresep($data)
     $idr = $data['idr'];
     $gambar_lama = $data["gambar_lama"];
     $gambar_utama_lama = $data["gambar_utama_lama"];
-    // langkah($data['bahan'], 1, 1);
-    // bahanresep($bahan, 1);
 
-    // langkah($data['langkah']);
-    // $cekgambar = tampilkan("SELECT image from resep where resep_id = $idr")[0]["image"];
     if ($_FILES['gambar']['error'] === 4) {
         // var_dump($gambar_lama);
         // die;
@@ -453,7 +428,6 @@ function editresep($data)
     } else {
         $gambar = upload();
     }
-    // $gambar = upload();
 
     if (!$gambar) {
         echo "
@@ -488,31 +462,18 @@ function editlangkah_r($data, $idr, $gambar_lama)
     global $koneksi;
 
     $jlh_langkah = count($data);
-    // $post_id = $idr;
-    // $jenis_post = $jenis;
     $id = tampilkan("SELECT langkah_resep_id from langkah_resep where resep_id = $idr ");
-    // echo "<pre>";
-    // var_dump($data);
-    // var_dump($gambar_lama);
-    // var_dump($_FILES);
-    // echo "</pre>";
-    // die;
-    // $gambarlama = 1;
 
     for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
-        // $gambar_langkah = $gambar[$i];
         $langkah = $data[$i];
         $idr = $id[$i]["langkah_resep_id"];
 
         if ($_FILES['gambar_langkah']['error'][$i] === 4) {
-            // var_dump($gambar_lama);
-            // die;
             $gambar_langkah = $gambar_lama[$i];
         } else {
             $gambar_langkah = upload2($i);
 
         }
-        // $gambar = upload();
 
         if ($gambar_langkah == 'default_gambar.jpg') {
             mysqli_query($koneksi, "UPDATE langkah_resep set langkah = '$langkah', gambar_langkah = '$gambar_langkah' where langkah_resep_id = $idr ");
@@ -526,10 +487,6 @@ function editbahan_r($data, $idr)
 {
     global $koneksi;
 
-    // echo '<pre>';
-    // var_dump($data);
-    // echo '</pre>';
-    // die();
     $id = tampilkan("SELECT br_id from bahan_resep where resep_id = $idr ");
 
     $jlh_bahan = count($data);
@@ -545,11 +502,6 @@ function bahanresep($data, $id)
 {
     global $koneksi;
 
-    // echo '<pre>';
-    // var_dump($data);
-    // echo '</pre>';
-    // die();
-
     $jlh_bahan = count($data);
     for ($i = 0; $i <= $jlh_bahan - 1; $i++) {
         $bahan = $data[$i];
@@ -562,16 +514,11 @@ function bahanresep($data, $id)
 function tambahtips($data)
 {
     global $koneksi;
-    // echo "<pre>";
-    // var_dump($data);
-    // echo "</pre>";
+  
 
     $judul_tips = $data['judul_tips'];
     $langkah = $data['langkah'];
     $user_id = $_SESSION['id_user'];
-    // die();
-
-    // $gambar = upload();
 
     $tips = "INSERT INTO tips (judul, user_id) VALUES('$judul_tips', '$user_id')";
 
@@ -580,8 +527,6 @@ function tambahtips($data)
         while ($isi = mysqli_fetch_array($hasil_post)) {
             $post_id = $isi['tips_id'];
         }
-        // var_dump($post_id);
-        // die();
 
         langkah($langkah, $post_id, 2); //, $data['gambar']
 
@@ -601,29 +546,17 @@ function tambahtips($data)
 function edittips($data)
 {
     global $koneksi;
-    // echo "<pre>";
-    // var_dump($data);
-    // echo "</pre>";
 
     $judul_tips = $data['judul_tips'];
     $langkah = $data['langkah'];
     $gambar_lama = $data["gambar_lama"];
     $idt = $data['idt'];
     $user_id = $_SESSION['id_user'];
-    // die();
-
-    // $gambar = upload();
 
     $tips = "UPDATE tips set judul = '$judul_tips' where tips_id = $idt";
 
     if ($koneksi->query($tips) === TRUE) {
-        // $hasil_post = mysqli_query($koneksi, "SELECT tips_id FROM tips where tips_id = $idt");
-        // while ($isi = mysqli_fetch_array($hasil_post)) {
-        // $post_id = $isi['tips_id'];
-        // }
-        // var_dump($post_id);
-        // die();
-
+   
         editlangkah_t($langkah, $idt, $gambar_lama); //, $data['gambar']
 
         echo "
@@ -648,13 +581,7 @@ function editlangkah_t($data, $postid, $gambar_lama)
     $post_id = $postid;
     // $jenis_post = $jenis;
     $id = tampilkan("SELECT langkah_tips_id from langkah_tips where tips_id = $post_id ");
-    // echo "<pre>";
-    // var_dump($data);
-    // var_dump($gambar_lama);
-    // var_dump($_FILES);
-    // echo "</pre>";
-    // die;
-    // $gambarlama = 1;
+ 
 
     for ($i = 0; $i <= $jlh_langkah - 1; $i++) {
         // $gambar_langkah = $gambar[$i];
@@ -863,10 +790,6 @@ function komentar_resep($data)
 {
     global $koneksi;
 
-    // echo '<pre>';
-    // var_dump($data);
-    // echo '</pre>';
-    // die();
     $id = $_SESSION["id_user"];
     $komentar = $data["komentar"];
     $resep_id = $data["resep_id"];
@@ -885,17 +808,11 @@ function komentar_resep($data)
                         document.location.href = '';
                     </script>";
     }
-
-
 }
 function komentar_tips($data)
 {
     global $koneksi;
 
-    // echo '<pre>';
-    // var_dump($data);
-    // echo '</pre>';
-    // die();
     $id = $_SESSION["id_user"];
     $komentar = $data["komentar"];
     $tips_id = $data["tips_id"];
@@ -914,7 +831,6 @@ function komentar_tips($data)
                         document.location.href = '';
                     </script>";
     }
-
 
 }
 
@@ -957,10 +873,7 @@ function cek_bookmark($id)
 
 function bookmark($data)
 {
-    // echo '<pre>';
-    // var_dump($data);
-    // echo '</pre>';
-    // die();
+
     global $koneksi;
 
     $uid = $data["user_id"];
@@ -1046,16 +959,13 @@ function cari($data)
 
     $keyword = $data["keyword"];
 
-    $hasil1 = tampilkan("SELECT resep.*, user.username, bahan_resep.*, langkah_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id join langkah_resep on langkah_resep.resep_id = resep.resep_id
+    $hasil1 = tampilkan("SELECT resep.*, user.username, bahan_resep.*, langkah_resep.* from resep join user on resep.user_id = user.user_id 
+    join bahan_resep on resep.resep_id = bahan_resep.resep_id join langkah_resep on langkah_resep.resep_id = resep.resep_id
     where resep.judul LIKE '%$keyword%' 
     OR resep.excerpt LIKE '%$keyword%'
     OR resep.asal_masakan LIKE '%$keyword%'
     OR langkah_resep.langkah LIKE '%$keyword%'
     OR bahan_resep.bahan LIKE '%$keyword%' group by resep.resep_id");
-
-    // $hasil2 = tampilkan("SELECT tips.*, user.username, langkah_tips.* from tips join user on tips.user_id = user.user_id join langkah_tips on tips.tips_id = langkah_tips.tips_id
-    // where tips.judul LIKE '%$keyword%' 
-    // OR langkah_tips.langkah LIKE '%$keyword%' group by tips.tips_id");
 
     $hasil3 = tampilkan("SELECT cookbook.*, user.username from cookbook join user on cookbook.user_id = user.user_id 
     where cookbook.judul LIKE '%$keyword%'
@@ -1074,10 +984,7 @@ function cari($data)
     <script>
         document.location.href = 'index.php?p=hasil_cari';
     </script>";
-    // echo '<pre>';
-    // var_dump($sql);
-    // echo '</pre>';
-    // die;
+  
     return $hasil;
 }
 
@@ -1094,13 +1001,11 @@ function caribahan($data)
     where resep.judul LIKE '%$keyword%' 
     OR resep.excerpt LIKE '%$keyword%'
     OR bahan_resep.bahan LIKE '%$keyword%' group by resep.resep_id limit 4");
-    // echo '<pre>';
-    // var_dump($sql);
-    // echo '</pre>';
-    // die;
+    
     $hasil[0]["keyword"] = $keyword;
     return $hasil;
 }
+
 function carialat($data)
 {
     global $koneksi;
@@ -1114,10 +1019,7 @@ function carialat($data)
     where resep.judul LIKE '%$keyword%' 
     OR resep.excerpt LIKE '%$keyword%'
     OR langkah_resep.langkah LIKE '%$keyword%' group by resep.resep_id");
-    // echo '<pre>';
-    // var_dump($sql);
-    // echo '</pre>';
-    // die;
+  
     return $hasil;
 }
 
@@ -1161,8 +1063,6 @@ function resepcookbook($data)
 
 function editprofil($data)
 {
-    // var_dump($data);
-    // die;
     global $koneksi;
     $uid = $_SESSION["id_user"];
     $username = $data['username'];
@@ -1177,14 +1077,11 @@ function editprofil($data)
     $id_lama = $tes["id_cookpad"];
 
     if ($_FILES['gambar']['error'] === 4) {
-        // var_dump($gambar_lama);
-        // die;
         $gambar = $gambar_lama;
     } else {
         $gambar = upload();
 
     }
-
 
 
     if ($email == $email_lama) {

@@ -188,10 +188,9 @@ if (isset($_POST["cari"])) {
 
           <div class="row row-cols-1 row-cols-md-6 g-4">
             <?php
-            $cookbook = tampilkan("SELECT cookbook.*, user.id_cookpad FROM cookbook join user on cookbook.user_id = user.user_id order by cookbook.cookbook_id desc limit 6");
-            // echo "<pre>";
-            // var_dump($cookbook);
-            // echo "</pre>";
+            $cookbook = tampilkan("SELECT cookbook.*, user.id_cookpad FROM cookbook join user 
+            on cookbook.user_id = user.user_id order by cookbook.cookbook_id desc limit 6");
+
             foreach ($cookbook as $cb) {
               $no = rand(1, 4);
               ?>
@@ -331,7 +330,7 @@ if (isset($_POST["cari"])) {
           </div>
           <br>
 
-       >
+       
 
           <!-- Ingin makan apa end -->
           <!-- Caraousel info end -->
@@ -430,7 +429,9 @@ if (isset($_POST["cari"])) {
           <!-- Olahan Kentang start -->
           <div>
             <?php
-            $tips = tampilkan("SELECT user.username, tips.tips_id, langkah_tips.gambar_langkah, langkah_tips.langkah, tips.tanggalbuat, tips.judul FROM tips LEFT JOIN user ON tips.user_id = user.user_id JOIN langkah_tips ON tips.tips_id = langkah_tips.tips_id WHERE NOT gambar_langkah = 'default_gambar.jpg' GROUP BY tips.tips_id order by tips.tips_id desc limit 5");
+            $tips = tampilkan("SELECT user.username, tips.tips_id, langkah_tips.gambar_langkah, langkah_tips.langkah, tips.tanggalbuat, tips.judul 
+            FROM tips LEFT JOIN user ON tips.user_id = user.user_id JOIN langkah_tips ON tips.tips_id = langkah_tips.tips_id 
+            WHERE NOT gambar_langkah = 'default_gambar.jpg' GROUP BY tips.tips_id order by tips.tips_id desc limit 5");
 
             ?>
             <h4><b>Tips</b></h4>
@@ -523,7 +524,8 @@ if (isset($_POST["cari"])) {
               <div class="row row-cols-1 row-cols-md-4 g-4">
 
                 <?php
-                $resep = tampilkan("SELECT resep.*, user.username,user.user_id FROM resep join user ON resep.user_id = user.user_id order by resep.resep_id desc limit 4");
+                $resep = tampilkan("SELECT resep.*, user.username,user.user_id FROM resep join user 
+                ON resep.user_id = user.user_id order by resep.resep_id desc limit 4");
                 // echo "<pre>";
                 // var_dump($resep);
                 // echo "</pre>";

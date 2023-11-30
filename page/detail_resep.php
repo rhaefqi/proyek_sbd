@@ -6,10 +6,12 @@ if (isset($_POST["submit_komen"])) {
 $id = $_GET["idr"];
 // var_dump($_SESSION)
 
-$resep = tampilkan("SELECT resep.*, user.username,user.id_cookpad,user.profil_image FROM resep join user on resep.user_id = user.user_id where resep.resep_id = $id ")[0];
+$resep = tampilkan("SELECT resep.*, user.username,user.id_cookpad,user.profil_image FROM resep join user on resep.user_id = user.user_id 
+                    where resep.resep_id = $id ")[0];
 $bahan = tampilkan("SELECT * from bahan_resep where resep_id = $id");
 $langkah = tampilkan("SELECT * from langkah_resep where resep_id = $id");
-$komentar = tampilkan("SELECT a.*,b.username,b.id_cookpad,b.profil_image from komentar_resep a join user b on a.user_id = b.user_id where a.resep_id = $id");
+$komentar = tampilkan("SELECT a.*,b.username,b.id_cookpad,b.profil_image from komentar_resep a join user b on a.user_id = b.user_id 
+                        where a.resep_id = $id");
 $cooksnap = tampilkan("SELECT cooksnap.*,user.id_cookpad from cooksnap join user on cooksnap.user_id = user.user_id where cooksnap.resep_id = $id")
   ?>
 <!-- Body -->

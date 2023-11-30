@@ -78,7 +78,7 @@ if (empty($_SESSION["id_user"])) { ?>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
-                        <?php var_dump($_SESSION["id_user"]) ?>
+                        
 
                     </li>
 
@@ -189,9 +189,6 @@ if (isset($_POST["submit"])) {
                         <button type="submit" name="submit" class="btn btn-cookpad">Masuk</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <a href="#">Lupa Kata Sandi?</a>
             </div>
         </div>
     </div>
