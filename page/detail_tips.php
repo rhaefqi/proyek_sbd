@@ -2,8 +2,10 @@
 require_once "./function.php";
 $idt = $_GET["idt"];
 
-$result = tampilkan("SELECT tips.*, user.username, user.deskripsi, user.id_cookpad, user.user_id FROM tips join user on tips.user_id = user.user_id where tips.tips_id = '$idt'")[0];
+$result = tampilkan("SELECT tips.*, user.username, user.deskripsi, user.id_cookpad, user.user_id FROM tips join user on tips.user_id = user.user_id 
+                    where tips.tips_id = '$idt'")[0];
 $langkah = tampilkan("SELECT * FROM langkah_tips where tips_id = $idt");
+$komen = tampilkan("SELECT a.*, b.username, b.id_cookpad, b.profil_image from komentar_tips a join user b on a.user_id = b.user_id where a.tips_id = $idt");
 
 $id = $result["user_id"];
 
@@ -13,7 +15,7 @@ $id = $result["user_id"];
 // echo "</pre>";
 // die();
 
-if(isset($_POST["hapus_tips"])){
+if (isset($_POST["hapus_tips"])) {
     hapustips($_POST);
 }
 ?>
@@ -89,23 +91,28 @@ if(isset($_POST["hapus_tips"])){
 
                     <div>
                         <?php
-                        if ($sts == 0) { ?>
-                            <form action="" method="post">
-                                <input type="hidden" name="pengikut" value="<?= $_SESSION["id_user"] ?>">
-                                <input type="hidden" name="diikuti" value="<?= $id ?>">
-                                <input type="hidden" name="status" value="1">
-                                <button type="submit" name="follow" class="btn btn-secondary" style="width: 100%;">Ikuti
-                                    Sekarang</button>
-                            </form>
-                        <?php } else { ?>
-                            <form action="" method="post">
-                                <input type="hidden" name="pengikut" value="<?= $_SESSION["id_user"] ?>">
-                                <input type="hidden" name="diikuti" value="<?= $id ?>">
-                                <input type="hidden" name="status" value="2">
-                                <button type="submit" name="follow" class="btn btn-outline-secondary"
-                                    style="width: 100%;">berhenti ikuti</button>
-                            </form>
-                        <?php } ?>
+                        if ($fid == $result["user_id"]) {
+
+                        } else {
+                            if ($sts == 0) { ?>
+                                <form action="" method="post">
+                                    <input type="hidden" name="pengikut" value="<?= $_SESSION["id_user"] ?>">
+                                    <input type="hidden" name="diikuti" value="<?= $id ?>">
+                                    <input type="hidden" name="status" value="1">
+                                    <button type="submit" name="follow" class="btn btn-secondary" style="width: 100%;">Ikuti
+                                        Sekarang</button>
+                                </form>
+                            <?php } else { ?>
+                                <form action="" method="post">
+                                    <input type="hidden" name="pengikut" value="<?= $_SESSION["id_user"] ?>">
+                                    <input type="hidden" name="diikuti" value="<?= $id ?>">
+                                    <input type="hidden" name="status" value="2">
+                                    <button type="submit" name="follow" class="btn btn-outline-secondary"
+                                        style="width: 100%;">berhenti ikuti</button>
+                                </form>
+                            <?php }
+                        } ?>
+
                     </div>
 
 
@@ -117,7 +124,7 @@ if(isset($_POST["hapus_tips"])){
                 <div class="card-body">
                     <?php
                     $kmn = hitung("SELECT * from komentar_tips where tips_id = $idt");
-                    $komen = tampilkan("SELECT a.*, b.username, b.id_cookpad, b.profil_image from komentar_tips a join user b on a.user_id = b.user_id where a.tips_id = $idt");
+                    
                     ?>
 
                     <h3> <img src="asset/img/aktivitas.png" alt="" width="5%">Komentar (

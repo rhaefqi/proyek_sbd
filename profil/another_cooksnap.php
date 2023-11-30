@@ -1,48 +1,51 @@
+<?php
+    require_once "function.php";
+
+    $uid = $_GET["idu"];
+    $cooksnap = tampilkan("SELECT cooksnap.*, resep.resep_id from cooksnap join resep on cooksnap.resep_id = resep.resep_id where cooksnap.user_id = $uid");
+    $hitung = count($cooksnap);
+?>
+
+
 <!-- Tampilan resep start -->
 <div class="row">
-    <div class="col-4">
-        <p><b>Jumlah Cooksnap</b></p>
-    </div>
-    <div class="col-2"></div>
-    <div class="col-6">
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Cari Resep" aria-label="Search">
-            <button class="btn btn-secondary" type="submit">Cari</button>
-        </form>
-    </div>
+   
 </div>
 <hr>
 
 <div>
-    <p><b>Tanggal</b></p>
-    <div class="row">
-        <div class="col-md-3">
-            <img src="asset/img/ayam.jpeg" class="img-fluid rounded-start" alt="...">
-        </div>
+    <!-- <div class="row"> -->
+        <?php foreach ($cooksnap as $cooksnap): ?>
 
-        <div class="col-md-3">
-            <img src="asset/img/donat.jpeg" class="img-fluid rounded-start" alt="...">
-        </div>
+            <a href="index.php?p=detail_resep&idr=<?= $cooksnap['resep_id'] ?>" class="text-decoration-none text-dark">
+                <!-- <div class="card"> -->
+                    <img class="card-img" <?php
+                    $g = $cooksnap['cooksnap_image'];
+                    $gambar = "gambar/$g";
+                    if (file_exists($gambar)) { ?> src="gambar/<?= $cooksnap['cooksnap_image'] ?>" <?php } else {
+                        //
+                    } ?> alt="..." style="width: 220px">
+                    <div class="card-img-overlay">
+                        <p class="card-text"><small>
+                                <?php
+                                $waktu = waktu($cooksnap['tanggal_dibuat']);
+                                ?>
+                                <?= $waktu ?>
+                            </small></p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <?= $cooksnap['komentar'] ?>
+                        </h5>
 
-        <div class="col-md-3">
-            <img src="asset/img/kue.jpeg" class="img-fluid rounded-start" alt="...">
-        </div>
+                    </div>
+                <!-- </div> -->
+            </a>
 
-        <div class="col-md-3">
-            <img src="asset/img/bekal.jpeg" class="img-fluid rounded-start" alt="...">
-        </div>
-    </div>
+        <?php endforeach ?>
+    <!-- </div> -->
 </div>
 
 <br> <br>
-<div>
-    <p><b>Tanggal</b></p>
 
-    <div class="row">
-        <div class="col-md-3">
-            <img src="asset/img/ayam.jpeg" class="img-fluid rounded-start" alt="...">
-        </div>
-    </div>
-
-</div>
 <!-- Tampilan resep end-->

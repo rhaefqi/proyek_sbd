@@ -3,7 +3,8 @@ $idbp = $_GET["idbp"];
 $bahan = tampilkan("SELECT * from bahan_pilihan where bp_id = $idbp")[0];
 $bahanuy = $bahan["bahan"];
 // $temp = cari($bahanuy);
-$resep = tampilkan("SELECT resep.*, user.username, bahan_resep.* from resep join user on resep.user_id = user.user_id join bahan_resep on resep.resep_id = bahan_resep.resep_id
+$resep = tampilkan("SELECT resep.*, user.username, bahan_resep.* from resep join user on resep.user_id = user.user_id 
+join bahan_resep on resep.resep_id = bahan_resep.resep_id
 where resep.judul LIKE '%$bahanuy%' 
 OR resep.excerpt LIKE '%$bahanuy%'
 OR bahan_resep.bahan LIKE '%$bahanuy%' group by resep.resep_id");

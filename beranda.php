@@ -106,9 +106,9 @@
               ?>
               <div class="col">
                 <div class="card" style="width: 12rem;">
-                  <a href="index.php?p=cookbook&idcb=<?= $cb["cookbook_id"] ?>">
+                  <!-- <a href="index.php?p=cookbook&idcb=<?= $cb["cookbook_id"] ?>"> -->
                     <img src="asset/img/lpcb<?= $no ?>.jpg" class="card-img-top" alt="...">
-                  </a>
+                  <!-- </a> -->
                   <div class="card-body">
                     <p>
                       <?= $cb["judul"] ?> <br>

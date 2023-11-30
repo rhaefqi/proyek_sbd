@@ -2,8 +2,10 @@
 require_once "./function.php";
 $idcb = $_GET["idcb"];
 
-$result = tampilkan("SELECT cookbook.cookbook_id, cookbook.judul, cookbook.excerpt, user.username, user.id_cookpad, user.user_id FROM cookbook LEFT JOIN user on cookbook.user_id=user.user_id WHERE cookbook.cookbook_id = '$idcb' ")[0];
-$resep = tampilkan("SELECT resep.*,user.username, user.profil_image FROM resep JOIN user on resep.user_id = user.user_id WHERE resep_id IN(SELECT resep_id FROM resep_cookbook WHERE cookbook_id = '$idcb') order by resep.resep_id ");
+$result = tampilkan("SELECT cookbook.cookbook_id, cookbook.judul, cookbook.excerpt, user.username, user.id_cookpad, user.user_id FROM cookbook 
+                    LEFT JOIN user on cookbook.user_id=user.user_id WHERE cookbook.cookbook_id = '$idcb' ")[0];
+$resep = tampilkan("SELECT resep.*,user.username, user.profil_image FROM resep JOIN user on resep.user_id = user.user_id 
+                  WHERE resep_id IN(SELECT resep_id FROM resep_cookbook WHERE cookbook_id = '$idcb') order by resep.resep_id ");
 // echo "<pre>";
 // var_dump($resep);
 // echo "</pre>";
